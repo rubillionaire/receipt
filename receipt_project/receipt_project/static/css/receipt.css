@@ -1,0 +1,100 @@
+/*! project specific CSS goes here. */
+
+body {
+    font-size: 1em;
+    font-family: calibre;
+}
+
+h1 {
+    text-align: center;
+    background: #eee;
+    font-size: 16em;
+    margin: 0;
+    padding: 0;
+    line-height: 70%;
+    letter-spacing: -2px;
+}
+
+h2 {
+    background: none;
+    font-size: 4em;
+    margin: 0;
+    padding: 0;
+    line-height: 70%;
+}
+
+img {
+    width: 80%;
+}
+
+a {
+    float: right;
+}
+
+p, footer {
+    font-size: 1em;
+    line-height: 120%;
+}
+
+p {
+    margin-bottom: 2em;
+}
+
+.agate {
+    font-size: 2em;
+    word-spacing: 0em;
+    line-height: 1em;
+}
+
+.simplon {
+    font-family: "simplon bp mono";
+}
+
+@media  screen {
+    body {
+        margin: 4em;
+        width: 42em;
+    }
+}
+
+@media print {
+    body {
+        width: 42em;
+        margin: 0em;
+    }
+    h1 {
+        margin: 0;
+        padding: 0;
+        font-size: 16em;
+        line-height: 70%;
+    }
+    h2 {
+        font-size: 8em;
+        line-height: 70%;
+    }
+    p {
+        font-size: 1.8em;
+        margin-bottom: 2em;
+    }
+    .greye {
+        color: #eee;
+    }
+    .greyd {
+        color: #ddd;
+    }
+    .greyc {
+        color: #ccc;
+    }
+    .greyb {
+        color: #bbb;
+    }
+    .greya {
+        color: #aaa;
+    }
+    .grey6 {
+        color: #666;
+    }
+     a {
+        display: none;
+    }
+}

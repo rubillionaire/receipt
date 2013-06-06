@@ -31,7 +31,7 @@ TEMPLATE_DEBUG = DEBUG
 ########## MANAGER CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
-    ('Your Name', 'your_email@example.com'),
+    ('Ruben Rodriguez', 'ruben@rubillionaire.com'),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
@@ -197,6 +197,8 @@ THIRD_PARTY_APPS = (
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
+    'receipt_project',
+    'receipt',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
