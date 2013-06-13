@@ -1,0 +1,47 @@
+#header {
+    background: black;
+    color: white;
+}
+
+#branding h1 {
+    color: white;
+}
+
+a:link,
+a:visited {
+    color: rgb(80, 80, 80);
+}
+
+.module h2,
+.module caption,
+.inline-group h2 {
+    background: rgb(140, 140, 140);
+}
+
+.row1 {
+    background: rgb(240, 240, 240);
+}
+.row2 {
+     background: rgb(248, 248, 248);   
+}
+
+thead th,
+tfoot td {
+    color: rgb(150, 150, 150);
+    /*font-size: 1.2em;*/
+}
+
+td, th {
+    font-size: 18px;
+    line-height: 30px;
+}
+
+#content h1 {
+    color: rgb(140, 140, 140);
+    margin: 20px 0;
+}
+
+#changelist .actions,
+#changelist .paginator {
+    background: white !important;
+}

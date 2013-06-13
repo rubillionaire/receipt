@@ -1,5 +1,6 @@
 # receipt/views.py
-from datetime import datetime as dt
+from datetime import datetime, timedelta
+import logging
 
 from django.contrib import messages
 from django.shortcuts import render
@@ -11,13 +12,70 @@ from braces.views import LoginRequiredMixin
 
 from .models import Event
 
+# get the weather every hour.
+# if its older than an hour,
+# don't include it on the receipt
+## weather API endpoint
+# http://api.wunderground.com/api/4be1df60aabd9d45/conditions/q/RI/Providence.json
 
-class ReceiptPrintView(View):
-    date = dt.now()
+# or do the weather in the browser
+# using local storage to stash
+# when it was last updated, and
+# the latest value
+
+logger = logging.getLogger(__name__)
+
+
+class ReceiptEventView(View):
+    template_name = 'receipt/event_base.html'
+
+    # time objects for querying
+    # past/present/future events
+    now = datetime.now() + timedelta(days=50) + timedelta(hours=5)
+
+    def events(self, now):
+        today = datetime.strptime(now.strftime('%m %d %y'), '%m %d %y')
+        end_of_today = today + timedelta(hours=24)
+
+        past_event = Event.objects.filter(start__gte=today,
+                                          end__lte=now)\
+                                  .order_by('start')
+
+        present_event = Event.objects.filter(start__gte=today,
+                                             start__lte=now,
+                                             end__gte=now,
+                                             end__lte=end_of_today)\
+                                     .order_by('start')
+
+        future_event = Event.objects.filter(start__gte=now,
+                                            end__lte=end_of_today)\
+                                    .order_by('start')
+
+        return past_event, present_event, future_event, today
+
+    def get(self, request, time, *args, **kwargs):
+        print time
+        self.now = datetime.strptime(time, '%Y-%m-%dT%H-%M')
+        past, present, future, today = self.events(self.now)
+
+        return render(request, self.template_name, {'past_event': past,
+                                                    'present_event': present,
+                                                    'future_event': future,
+                                                    'now': self.now,
+                                                    'today': today})
+
+
+class ReceiptPrintView(ReceiptEventView):
     template_name = 'receipt/daily.html'
 
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, {'date': self.date})
+        past, present, future, today = self.events(self.now)
+
+        return render(request, self.template_name, {'past_event': past,
+                                                    'present_event': present,
+                                                    'future_event': future,
+                                                    'now': self.now,
+                                                    'today': today})
 
 
 class EventActionMixin(object):

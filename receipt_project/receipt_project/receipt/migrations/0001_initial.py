@@ -16,18 +16,6 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'receipt', ['Show'])
 
-        # Adding model 'Event'
-        db.create_table(u'receipt_event', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('start', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('end', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('featured', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('artist', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['receipt.Artist'], blank=True)),
-            ('location', self.gf('django.db.models.fields.CharField')(default='', max_length='255', blank=True)),
-            ('event_type', self.gf('django.db.models.fields.CharField')(default='', max_length='255', blank=True)),
-        ))
-        db.send_create_signal(u'receipt', ['Event'])
-
         # Adding model 'Artist'
         db.create_table(u'receipt_artist', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -41,16 +29,40 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'receipt', ['Artist'])
 
+        # Adding model 'Event'
+        db.create_table(u'receipt_event', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('start', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
+            ('end', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
+            ('featured', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('location', self.gf('django.db.models.fields.CharField')(default='', max_length='255', blank=True)),
+            ('event_type', self.gf('django.db.models.fields.CharField')(default='', max_length='255', blank=True)),
+            ('title', self.gf('django.db.models.fields.CharField')(max_length=255, blank=True)),
+            ('notes', self.gf('django.db.models.fields.TextField')(default='')),
+        ))
+        db.send_create_signal(u'receipt', ['Event'])
+
+        # Adding M2M table for field artist on 'Event'
+        db.create_table(u'receipt_event_artist', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('event', models.ForeignKey(orm[u'receipt.event'], null=False)),
+            ('artist', models.ForeignKey(orm[u'receipt.artist'], null=False))
+        ))
+        db.create_unique(u'receipt_event_artist', ['event_id', 'artist_id'])
+
 
     def backwards(self, orm):
         # Deleting model 'Show'
         db.delete_table(u'receipt_show')
 
+        # Deleting model 'Artist'
+        db.delete_table(u'receipt_artist')
+
         # Deleting model 'Event'
         db.delete_table(u'receipt_event')
 
-        # Deleting model 'Artist'
-        db.delete_table(u'receipt_artist')
+        # Removing M2M table for field artist on 'Event'
+        db.delete_table('receipt_event_artist')
 
 
     models = {
@@ -67,13 +79,15 @@ class Migration(SchemaMigration):
         },
         u'receipt.event': {
             'Meta': {'object_name': 'Event'},
-            'artist': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['receipt.Artist']", 'blank': 'True'}),
+            'artist': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['receipt.Artist']", 'symmetrical': 'False', 'blank': 'True'}),
             'end': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'event_type': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': "'255'", 'blank': 'True'}),
             'featured': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'location': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': "'255'", 'blank': 'True'}),
-            'start': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'})
+            'notes': ('django.db.models.fields.TextField', [], {'default': "''"}),
+            'start': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'})
         },
         u'receipt.show': {
             'Meta': {'object_name': 'Show'},

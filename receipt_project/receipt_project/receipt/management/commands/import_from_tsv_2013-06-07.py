@@ -140,20 +140,20 @@ class Command(BaseCommand):
                     artist.twitterhandle = datum['Artist']['twitterhandle']
                     artist.image = datum['Artist']['image']
 
+                event = Event()
+                event.featured = datum['Event']['featured']
+                event.artist = artist
+                event.location = datum['Event']['location']
+                event.event_type = datum['Event']['event_type']
+                event.title = datum['Event']['title']
+
                 start, end = self.start_end(datum['Event']['date'],
                                             datum['Event']['start'],
                                             datum['Event']['end'],
                                             datum['Event']['event_type'])
 
-                event, ev_created = Event.objects.get_or_create(
-                    location=datum['Event']['location'],
-                    title=datum['Event']['title'],
-                    start=start,
-                    end=end)
-
-                event.artist.add(artist)
-                event.event_type = datum['Event']['event_type']
-                event.featured=datum['Event']['featured']
+                event.start = start
+                event.end = end
 
                 print event
                 event.save()

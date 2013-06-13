@@ -4,7 +4,7 @@ from .models import Event, Show, Artist
 
 
 class EventAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('__unicode__', 'admin_artists',)
 
 admin.site.register(Event, EventAdmin)
 
