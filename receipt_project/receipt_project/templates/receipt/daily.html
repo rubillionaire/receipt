@@ -6,58 +6,14 @@
 
 
 {% block content %}
-<header>
-    <p>Welcome to Locally Made</p>
-</header>
-
-<section class="status">
-    <p><strong>It is now</strong>: {{ now|date:"fA"|lower }} on {{ now|date:"l, F j Y" }}.</p>
-    <p><strong>You are at</strong>: the Lower Farago entrance of the RISD Museum.</p>
-</section>
-
-<section>
-    <h1>{{ now|date:"m/d" }}</h1>
-</section>
-
-{% if present_event %}
-    <header>
-        <p>present events</p>
-    </header>
-    {% for event in present_event %}
-    <section>
-        <h1>{{ event.start|date:"f:i" }}</h1>
-        <p>{{ event.present_description }}</p>
-    </section>
-    {% endfor %}    
-{% endif %}
-
-{% if future_event %}
-    <header>
-        <p>future events</p>
-    </header>
-    {% for event in future_event %}
-    <section>
-        <h1>{{ event.start|date:"f:i" }}</h1>
-        <p>{{ event.future_description }}</p>
-    </section>
-    {% endfor %}    
-{% endif %}
-
-{% if past_event %}
-
-    <header>
-        <p>past events</p>
-    </header>
-    {% for event in past_event %}
-    <section>
-        <h1>{{ event.start|date:"f:i" }}</h1>
-        <p>{{ event.past_description }}</p>
-    </section>
-    {% endfor %}
-{% endif %}
-
 {% endblock content %}
 
+
+{% block extra_before_js %}
+<script>
+    window.now = "{{ now|date:'Y-m-dTH-i'}}";
+</script>
+{% endblock extra_before_js %}
 
 {% block extrajs %}
 {% endblock extrajs %}

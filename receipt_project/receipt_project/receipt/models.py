@@ -34,16 +34,10 @@ class Artist(models.Model):
     last_name = models.CharField(max_length=255, null=False, blank=True)
     pseudonym = models.CharField(max_length=255, null=False, blank=True)
 
-    artist_type = models.CharField(max_length=255, null=False, blank=True)
+    # artist_type = models.CharField(max_length=255, null=False, blank=True)
 
     url = models.CharField(max_length=255, null=False, blank=True)
     twitterhandle = models.CharField(max_length=255, null=False, blank=True)
-    ## if image magick
-    image = models.FileField(upload_to="artists/%Y-%m-%d/%M-%S",
-                             null=False,
-                             blank=True)
-    ## if pil
-    # image = models.ImageField(upload_to="artists/%Y-%m-%d/%M-%S")
 
     def __unicode__(self):
         if self.pseudonym:
@@ -101,6 +95,10 @@ class Event(TimeFramedModel):
         null=False,
         blank=True)
 
+    image = models.FileField(upload_to="events/%Y-%m-%d/%M-%S",
+                             null=True,
+                             blank=True)
+
     def location_description(self):
         location_map = {
             'Lower Farago Gallery': u'here',
@@ -112,22 +110,32 @@ class Event(TimeFramedModel):
         else:
             return u'not-in-database'
 
-    def past_description(self):
-        pass
-
-    def present_description(self):
-        pass
-
-    def future_description(self):
-        pass
-
-    def event_description(self):
-        description = ''
-        return description
-
     def admin_artists(self):
         return ', '.join([a.first_name for a in self.artist.all()])
     admin_artists.short_description = "Artists"
+
+    # used for the large text
+    # associated with each event
+    def feature_name(self):
+        artists = self.artist.all()
+        if len(artists) > 1:
+            return self.title
+        else:
+            return '{0} {1}'.format(artists[0].first_name, artists[0].last_name)
+
+    # used for the last sentence
+    # in the description
+    def more_on(self):
+        artists = self.artist.all()
+        if len(artists) == 1:
+            if artists[0].url:
+                return 'More on {0} at {1}.'.format(artists[0].first_name,
+                                                    artists[0].url)
+            else:
+                return ''
+        else:
+            artists_list = ', '.join([a.first_name for a in artists])
+            return artist_list
 
     def __unicode__(self):
         if len(self.title) > 0:

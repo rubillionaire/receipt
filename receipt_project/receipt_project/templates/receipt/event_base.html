@@ -1,49 +1,104 @@
 <header>
-    <p>Welcome to Locally Made</p>
+    <h2>
+    <img src="/static/img/anchor2_wh.png" width="44">
+    <br>Welcome to Locally Made<br>
+    <span>----------------------------------</span></h2>
+    
+    <p><strong>It is now</strong>: {{ now|date:"fA"|lower }} on {{ now|date:"l, F j Y" }}.</p>
+    <p><strong>You are at</strong>: the Lower Farago entrance of the RISD Museum.</p>
+
+    <p><strong>Outside it is</strong>: 65&#176;F and sunny</p>
+
+    <h2><span>----------------------------------</span></h2>
+
 </header>
 
 <section class="status">
-    <p><strong>It is now</strong>: {{ now|date:"fA"|lower }} on {{ now|date:"l, F j Y" }}.</p>
-    <p><strong>You are at</strong>: the Lower Farago entrance of the RISD Museum.</p>
+    
 </section>
 
-<section>
-    <h1>{{ now|date:"m/d" }}</h1>
+<section class="date">
+    <h1><span id="month">{{ now|date:"m" }}</span><span class="light">/</span><span id="day">{{ now|date:"d" }}</span></h1>
 </section>
 
 {% if present_event %}
-    <header>
-        <p>present events</p>
-    </header>
-    {% for event in present_event %}
-    <section>
-        <h1>{{ event.start|date:"f:i" }}</h1>
-        <p>{{ event.present_description }}</p>
-    </section>
-    {% endfor %}    
+<section class="upcoming">
+    <h2><span>----------------------------------</span><br>Taking place now.<br>
+    <span>----------------------------------</span></h2>
+
+    <ul>
+        {% for event in present_event %}
+        <li>
+            <h3>{{ event.start|date:"f" }}<span class="medium">:</span>{{ event.start|date:"i" }}</h3>
+            <p><span class="highlight">{{ event.event_type }}</span>: {{ event.title }} in the {{ event.location }} until about {{ event.end|date:"f" }}{% if event.end|date:"i" %}{{ event.end|date:":i"}}{% endif %}{{ event.end|date:"a"}} {{event.more_on}}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
 {% endif %}
 
 {% if future_event %}
-    <header>
-        <p>future events</p>
-    </header>
-    {% for event in future_event %}
-    <section>
-        <h1>{{ event.start|date:"f:i" }}</h1>
-        <p>{{ event.future_description }}</p>
-    </section>
-    {% endfor %}    
+<section class="upcoming">
+    <h2><span>----------------------------------</span><br>Today's upcoming events<br>
+    <span>----------------------------------</span></h2>
+
+    <ul>
+        {% for event in future_event %}
+        <li>
+            <h3>{{ event.start|date:"f" }}<span class="medium">:</span>{{ event.start|date:"i" }}</h3>
+            <p><span class="highlight">{{ event.event_type }}</span>: {{ event.title }} in the {{ event.location }} until about {{ event.end|date:"f" }}{% if event.end|date:"i" %}{{ event.end|date:":i"}}{% endif %}{{ event.end|date:"a"}} {{event.more_on}}</p>
+            <div class="person">
+                <div class="name"><h4>{{ event.feature_name }}</h4></div>
+                {% if event.image %}
+                <div class="image"><img src="{{ event.image }}"></div>   
+                {% endif %}
+            </div>
+            <p class="divider">* * *</p>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
 {% endif %}
 
 {% if past_event %}
-
-    <header>
-        <p>past events</p>
-    </header>
-    {% for event in past_event %}
-    <section>
-        <h1>{{ event.start|date:"f:i" }}</h1>
-        <p>{{ event.past_description }}</p>
-    </section>
-    {% endfor %}
+<section class="earlier">
+    <h2><span>------------------------------- </span><br>Earlier today<br>
+        <span>------------------------------- </span></h2>
+    <ul>
+        {% for event in past_event %}
+        <li>
+            <p><span class="highlight">{{ event.event_type }}</span>: {{ event.title }}. {{event.more_on}}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
 {% endif %}
+
+
+{# always show #}
+<section class="permanent">
+    <h2><span>------------------------------- </span><br>On view until November 3rd<br>
+    <span>------------------------------- </span></h2>
+        <h3>Upper Farago</h3>
+        <p>55 recent prints, drawings and sculptures from 36 artists selected from the Museum's permanent collection</p>
+        <p class="divider">* * *</p>
+        <h3>Spalter New Media Gallery</h3>
+        <p>11 videos from 7 artists selected from the Museum's permanent collection </p>
+        <p class="divider">* * *</p>
+        <h3>Elsewhere in the Museum</h3>
+        <p>The anchor symbol next to artworks throughout the Museum denotes pieces created in the Providence area.
+        <h2>
+        <img src="/static/img/anchor2.png" width="45"> </h2>
+        </p>
+</section>
+
+
+
+{# always show #}
+<footer>
+    <h2><span>------------------------------- </span><br>Thank you for coming,<br>please come again<br><span>------------------------------- </span></h2>
+        <p>There are  130  more events from local artists including Peter Glantz  and  Meredith Stern. Visit <span class="highlight">risdmuseum.org</span> on your phone or desktop to see photos of today's events and details on future events.</p>
+        <p>This daily guide to the exhibit was created by The Design Office of Providence, R.I. </p>
+        <p class="divider">* * *</p>
+        <p><img src="/static/img/rm.gif" width="80"><br><strong>RISD Museum</strong> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; risdmuseum.org<br>20 North Main St<br> Providence, RI 02906<br></p>
+</footer>

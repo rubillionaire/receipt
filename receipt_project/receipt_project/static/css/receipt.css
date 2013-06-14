@@ -1,100 +1,199 @@
-/*! project specific CSS goes here. */
+ul,
+li,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+body {
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+    font-size: 1em;
+}
+
+@font-face {
+    font-family: Fort_lm;
+    font-weight: 500;
+    src: url("/static/fonts/Fort-Book.otf") format("opentype");
+}
+
+@font-face {
+    font-family: Fort_lm;
+    font-weight: 800;
+    src: url("/static/fonts/Fort-Extrabold.otf") format("opentype");
+}
+@font-face {
+    font-family: Fort_lm;
+    font-weight: 600;
+    src: url("/static/fonts/Fort-Medium.otf") format("opentype");
+}
+
+@font-face {
+font-family: Simplon_lm;
+font-weight: 500;
+src: url("/static/fonts/Simplon_BP_Mono_Regular_1.otf") format("opentype");
+}
+
+@font-face {
+    font-family: Simplon_lm;
+    font-weight: 800;
+    src: url("/static/fonts/Simplon_BP_Mono_Bold_1.otf") format("opentype");
+}
 
 body {
-    font-size: 1em;
-    font-family: calibre;
+    font-size: 8.4pt;
+    font-family: "Fort_lm";
+    width: 16.2pc;
+    margin: 0 auto;
+    color: black;
+}
+
+h1,
+.upcoming h3 {
+    text-align: center; 
+    
+    font-size: 66pt;
+    font-weight: 800;
+    -webkit-font-feature-settings: 'pnum', 'lnum';
+    -moz-font-feature-settings: 'pnum', 'lnum';
+
+    margin: 1.5pc 0 .5pc 0; padding: 0;
+
+    line-height: 90%; 
+
+    letter-spacing: -5px;
 }
 
 h1 {
-    text-align: center;
-    background: #eee;
-    font-size: 16em;
-    margin: 0;
-    padding: 0;
-    line-height: 70%;
-    letter-spacing: -2px;
+    margin-left: -4pt;
+    margin-bottom: 1pc;
 }
 
 h2 {
+    background: none; 
+    line-height: 1.2pc; 
+    font-family: "Simplon_lm";
+    font-weight: bold;
+    text-align: center;
+    font-size: 8.5pt; 
+    word-spacing: 0;
+    overflow: hidden;
+}
+
+h2 span {
+    font-size: 9pt;
+    white-space: nowrap;
+    letter-spacing: 1.6pt;
+    display: inline-block;
+    margin: 10pt 0;
+}
+
+div.person { 
     background: none;
-    font-size: 4em;
-    margin: 0;
-    padding: 0;
-    line-height: 70%;
+    min-height: 30pc;
+    max-height: 36pc;
+    overflow: hidden;
+    margin: 1pc 0 0;
 }
 
-img {
-    width: 80%;
+div.person .name { 
+    height: 16.2pc;
+    display: table-cell;
+    vertical-align: middle;
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
 }
 
-a {
-    float: right;
+div.person .name h4 { 
+    letter-spacing: -2pt;
+    text-align: left;
+    font-size: 64pt; 
+    line-height: 90%;
+    font-weight: 800;
+    margin: 0 auto;
+    width: 16.2pc;
 }
 
-p, footer {
-    font-size: 1em;
-    line-height: 120%;
+.permanent h3 { 
+    font-family: "Simplon_lm";
+    font-size: 8.4pt;
+    border-bottom: 1px solid grey; padding-bottom: 0pt;
+    display: inline-block;
+    clear: both;
 }
 
-p {
-    margin-bottom: 2em;
+p { 
+    font-size: 8.4pt;
+    font-family: "Simplon_lm";
+    line-height: 14pt;
+    letter-spacing: .2pt;
+    word-spacing: -1.2pt;
+    margin: .25pc 0 .5pc 0; 
 }
 
-.agate {
-    font-size: 2em;
-    word-spacing: 0em;
-    line-height: 1em;
+p.divider {
+    font-family: "Simplon_lm";
+    text-align: center;
+    font-size: 10pt;
+    margin: .25pc 0;
 }
 
-.simplon {
-    font-family: "simplon bp mono";
+li {
+    list-style-type: none;
+}
+
+.upcoming li:first-child {
+    margin-top: -1pc;
+}
+    
+
+.light {
+    font-weight: 300;
+}
+.medium {
+    font-weight: 600;
+}
+.highlight {
+    border-bottom: 1px solid grey;
+    padding-bottom: 0pt;
+}
+
+.image {
+    width: 16.2pc;
+    max-height: 18.4pc;
+    margin-bottom: .75pc; 
+    overflow: hidden;
+    z-index: -1;
+}
+
+.image div {
+    height: 18.4pc;
+    display: table-cell;
+    vertical-align: bottom;
+}
+.image img {
+    width: 100%;
+    opacity: .7;
+    position: relative;
+    z-index: -1;
+}
+
+footer img {
+    display: block;
 }
 
 @media  screen {
-    body {
-        margin: 4em;
-        width: 42em;
-    }
+    body {  margin: 4em auto; }
 }
 
 @media print {
-    body {
-        width: 42em;
-        margin: 0em;
-    }
-    h1 {
-        margin: 0;
-        padding: 0;
-        font-size: 16em;
-        line-height: 70%;
-    }
-    h2 {
-        font-size: 8em;
-        line-height: 70%;
-    }
-    p {
-        font-size: 1.8em;
-        margin-bottom: 2em;
-    }
-    .greye {
-        color: #eee;
-    }
-    .greyd {
-        color: #ddd;
-    }
-    .greyc {
-        color: #ccc;
-    }
-    .greyb {
-        color: #bbb;
-    }
-    .greya {
-        color: #aaa;
-    }
-    .grey6 {
-        color: #666;
-    }
-     a {
-        display: none;
-    }
+    body { }
+    /*  prints page upside down
+    html {  margin: 0.4pc 0 ;   -moz-transform: rotate(180deg); } */
+
 }

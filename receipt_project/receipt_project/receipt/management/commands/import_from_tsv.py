@@ -16,17 +16,17 @@ class ReceiptData():
     _default_schema = {
         "Event": {
             "featured": False,
-            "location": False,
-            "event_type": 7,
-            "title": 8,
-            "date": 3,
-            "start": 4,  # prepend date
-            "end": 5,    # prepend date
+            "location": 11,
+            "event_type": 4,
+            "title": 5,
+            "date": 7,
+            "start": 9,  # prepend date
+            "end": 10,    # prepend date
         },
         "Artist": {
-            "first_name": 1,
-            "last_name": 2,
-            "pseudonym": 6,
+            "first_name": 2,
+            "last_name": 1,
+            "pseudonym": 3,
             "artist_type": False,
             "url": False,
             "twitterhandle": False,
@@ -151,9 +151,11 @@ class Command(BaseCommand):
                     start=start,
                     end=end)
 
+                if ev_created:
+                    event.event_type = datum['Event']['event_type']
+                    event.featured = datum['Event']['featured']
+
                 event.artist.add(artist)
-                event.event_type = datum['Event']['event_type']
-                event.featured=datum['Event']['featured']
 
                 print event
                 event.save()
