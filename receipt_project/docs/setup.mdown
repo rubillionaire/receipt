@@ -1,0 +1,81 @@
+## web server
+
+- setup project
+	
+	cd ~/Documents
+	virtualenv receipt_env
+	cd receipt_env
+	source bin/activate
+	mkdir repo
+	cd repo
+	git clone https://github.com/rubillionaire/receipt.git
+	cd receipt/receipt_project/
+	pip install -r requirements
+
+- setup production environment
+
+	mkdir media/
+	mkdir apache/
+
+	- populated apache_django_wsgi.conf
+	- receipt.wsgi
+	- appened the following to /etc/apache2/httpd.conf
+
+	# user added
+	Include /Users/risdworks/Documents/receipt_env/repo/receipt/receipt_project/receipt_project/apache/apache_django_wsgi.conf
+
+
+#### completed
+- install gcc
+	- https://github.com/kennethreitz/osx-gcc-installer
+- install python
+	- install pip
+		- easy_install pip
+	- install virtualenv
+		- sudo pip install virtualenv
+
+- install homebrew
+	- ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
+		- brew install imagemagick
+
+- install mod_wsgi
+
+	- http://jessenoller.com/blog/2009/07/24/django-mod_wsgi-apache-and-os-x-do-it
+
+	curl -o mod_wsgi.tgz http://modwsgi.googlecode.com/files/mod_wsgi-3.4.tar.gz
+	tar -xzf mod_wsgi.tgz
+	cd mod_wsgi-3.3
+	./configure
+	make
+	sudo make install
+
+	- edit /etc/apache2/httpd.conf. add this after all LoadModule lines
+
+	LoadModule wsgi_module libexec/apache2/mod_wsgi.so
+
+	- restart apache
+
+	sudo apachectl restart
+
+	- ensure the module us there (wsgi_module)
+
+	httpd -M | sort
+
+
+## remote access
+
+- http://www.macworld.com/article/1165891/see_your_macs_screen_remotely.html
+
+#### completed
+
+
+### notes
+
+- httpd is the command for apache
+	- -v shows version
+	- -M shows installed modules
+
+risdworks/itango
+
+- django admin
+	risdmuseum/locallymade
