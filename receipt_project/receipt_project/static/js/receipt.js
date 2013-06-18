@@ -61,6 +61,13 @@
         win.print();
     });
 
+    // update the page every minute
+    var update_now = function () {
+        date.add('minutes', 1);
+        update();
+    };
+    win.setInterval(update_now, 60000);
+
     // initial load
     update();
 

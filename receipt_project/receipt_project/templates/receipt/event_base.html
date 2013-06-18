@@ -32,6 +32,12 @@
             <h3>{{ event.start|date:"f" }}<span class="medium">:</span>{{ event.start|date:"i" }}</h3>
             <p><span class="highlight">{{ event.event_type }}</span>: {{ event.title }} in the {{ event.location }} until about {{ event.end|date:"f" }}{% if event.end|date:"i" %}{{ event.end|date:":i"}}{% endif %}{{ event.end|date:"a"}} {{event.more_on}}</p>
         </li>
+        <div class="person">
+                <div class="name"><h4>{{ event.feature_name }}</h4></div>
+                {% if event.image %}
+                <div class="image"><img src="{{ event.processed_image }}"></div>   
+                {% endif %}
+            </div>
         {% endfor %}
     </ul>
 </section>
@@ -50,7 +56,7 @@
             <div class="person">
                 <div class="name"><h4>{{ event.feature_name }}</h4></div>
                 {% if event.image %}
-                <div class="image"><img src="{{ event.image }}"></div>   
+                <div class="image"><img src="{{ event.processed_image }}"></div>   
                 {% endif %}
             </div>
             <p class="divider">* * *</p>

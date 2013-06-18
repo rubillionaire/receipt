@@ -34,7 +34,7 @@ class Artist(models.Model):
     last_name = models.CharField(max_length=255, null=False, blank=True)
     pseudonym = models.CharField(max_length=255, null=False, blank=True)
 
-    # artist_type = models.CharField(max_length=255, null=False, blank=True)
+    artist_type = models.CharField(max_length=255, null=False, blank=True)
 
     url = models.CharField(max_length=255, null=False, blank=True)
     twitterhandle = models.CharField(max_length=255, null=False, blank=True)
@@ -95,9 +95,14 @@ class Event(TimeFramedModel):
         null=False,
         blank=True)
 
-    image = models.FileField(upload_to="events/%Y-%m-%d/%M-%S",
+    image = models.FileField(upload_to="events/%Y-%m-%d/%H-%M-%S",
                              null=True,
                              blank=True)
+
+    def processed_image(self):
+        directory = '/'.join(self.image.url.split('/')[0:-1])
+        extension = self.image.url.split('.')[-1]
+        return '{0}/processed.{1}'.format(directory, extension)
 
     def location_description(self):
         location_map = {
@@ -135,12 +140,9 @@ class Event(TimeFramedModel):
                 return ''
         else:
             artists_list = ', '.join([a.first_name for a in artists])
-            return artist_list
+            return artists_list
 
     def __unicode__(self):
         if len(self.title) > 0:
             return u'{0}'.format(self.title)
         return u'No title'
-
-    # Description box that will override the use of
-    # a data driven description

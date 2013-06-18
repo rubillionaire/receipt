@@ -1,6 +1,7 @@
 import codecs
 from datetime import datetime as dt
 from datetime import timedelta
+import pytz
 from os.path import abspath, dirname
 
 from django.core.management.base import BaseCommand, CommandError
@@ -83,6 +84,9 @@ class Command(BaseCommand):
     args = "No arguments."
     help = "Adds to database from TSV"
 
+    # used to localize dates
+    timezone = pytz.timezone('US/Eastern')
+
     def start_end(self, date, start, end, event_type):
         """returns a start and end datetime object"""
         if len(date) < 1:
@@ -95,6 +99,8 @@ class Command(BaseCommand):
             start = self.format_time(start)
             start_str = u'{0} {1}'.format(date_str, start)
             start_dt = dt.strptime(start_str, '%m/%d/%y %I:%M%p')
+            # localize it
+            start_dtl = self.timezone.localize(start_dt, is_dst=True)
 
             if end:
                 end = self.format_time(end)
@@ -106,7 +112,9 @@ class Command(BaseCommand):
                 else:
                     end_dt = start_dt + timedelta(hours=1)
 
-            return start_dt, end_dt
+            end_dtl = self.timezone.localize(end_dt, is_dst=True)
+
+            return start_dtl, end_dtl
 
         else:
             # no start time, no end time. just a date

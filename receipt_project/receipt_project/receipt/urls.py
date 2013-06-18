@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.conf.urls import patterns, url
 
 from .views import ReceiptPrintView, ReceiptEventView
@@ -14,4 +16,4 @@ urlpatterns = patterns(
         view=ReceiptEventView.as_view(),
         name="receipt_event"
     ),
-)
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

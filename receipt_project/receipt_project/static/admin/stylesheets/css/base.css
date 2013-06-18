@@ -45,3 +45,13 @@ td, th {
 #changelist .paginator {
     background: white !important;
 }
+.receipt-event.change-form .field-description label {
+    width: 7em;
+}
+.receipt-event.change-form .field-description p {
+    font-size: 1.5em;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 4em;
+    width: 400px;
+}
