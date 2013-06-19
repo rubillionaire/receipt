@@ -58,7 +58,9 @@
         }
     });
     $(win).on('click', function (e) {
-        win.print();
+        // notify server about a print
+        // in order to check queue
+        // win.print();
     });
 
     // update the page every minute
