@@ -35,11 +35,6 @@ class ReceiptEventView(View):
     now = datetime.strptime('07 18 2013 10 00', '%m %d %Y %H %M')
     # now = datetime.now()
 
-    def format(self, qs):
-        # print qs[0]
-        # print qs[0].feature_name()
-        pass
-
     def events(self, now):
         today = datetime.strptime(now.strftime('%m %d %y'), '%m %d %y')
         end_of_today = today + timedelta(hours=24)
@@ -58,19 +53,40 @@ class ReceiptEventView(View):
                                             end__lte=end_of_today)\
                                     .order_by('start')
 
-        self.format(future_event)
+        future_events_count = Event.objects.filter(start__gt=now)\
+            .count()
 
-        return past_event, present_event, future_event, today
+        # random future artists for footer
+        random_future_events = Event.objects.filter(
+            start__gt=end_of_today)\
+            .order_by('start')[:2]
+
+        random_future_artist_1 = random_future_events[0]\
+            .artist.all()[0]
+        random_future_artist_2 = random_future_events[1]\
+            .artist.all()[0]
+        # end random future artists for footer
+
+        return past_event, present_event, future_event,\
+            today, future_events_count, random_future_artist_1,\
+            random_future_artist_2
 
     def get(self, request, time, *args, **kwargs):
         self.now = datetime.strptime(time, '%Y-%m-%dT%H-%M')
-        past, present, future, today = self.events(self.now)
+        past, present, future, today,\
+            future_events_count,\
+            random_future_artist_1,\
+            random_future_artist_2 = self.events(self.now)
 
-        return render(request, self.template_name, {'past_event': past,
-                                                    'present_event': present,
-                                                    'future_event': future,
-                                                    'now': self.now,
-                                                    'today': today})
+        return render(request, self.template_name, {
+            'past_event': past,
+            'present_event': present,
+            'future_event': future,
+            'future_events_count': future_events_count,
+            'random_future_artist_1': random_future_artist_1,
+            'random_future_artist_2': random_future_artist_2,
+            'now': self.now,
+            'today': today})
 
 
 class ReceiptPrintView(ReceiptEventView):

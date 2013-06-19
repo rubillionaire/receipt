@@ -109,7 +109,7 @@
 {# always show #}
 <footer>
     <h2><span>------------------------------- </span><br>Thank you for coming,<br>please come again<br><span>------------------------------- </span></h2>
-        <p>There are  130  more events from local artists including Peter Glantz  and  Meredith Stern. Visit <span class="highlight">risdmuseum.org</span> on your phone or desktop to see photos of today's events and details on future events.</p>
+        <p>There are {{ future_events_count }} more events from local artists including {{ random_future_artist_1.first_name }} {{random_future_artist_1.last_name }} and {{ random_future_artist_2.first_name }} {{ random_future_artist_2.last_name }}. Visit <span class="highlight">risdmuseum.org</span> on your phone or desktop to see photos of today's events and details on future events.</p>
         <p>This daily guide to the exhibit was created by The Design Office of Providence, R.I. </p>
         <p class="divider">* * *</p>
         <p><img src="/static/img/rm.gif" width="80"><br><strong>RISD Museum</strong> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; risdmuseum.org<br>20 North Main St<br> Providence, RI 02906<br></p>
