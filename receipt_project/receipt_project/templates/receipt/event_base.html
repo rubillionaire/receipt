@@ -29,9 +29,9 @@
     <ul>
         {% for event in present_event %}
         <li>
-            <h3>{{ event.start|date:"f" }}<span class="medium">:</span>{{ event.start|date:"i" }}</h3>
-            <p><span class="highlight">{{ event.event_type }}</span>: {{ event.title }} in the {{ event.location }} until about {{ event.end|date:"f" }}{% if event.end|date:"i" %}{{ event.end|date:":i"}}{% endif %}{{ event.end|date:"a"}} {{event.more_on}}</p>
-            
+            <h3>{{ event.start|date:"g" }}<span class="medium">:</span>{{ event.start|date:"i" }}</h3>
+            <p><span class="highlight">{{ event.event_type }}</span>: {{ event.title }} in the {{ event.location }} until about {{ event.end|date:"g" }}{% if event.end|date:"i" %}{{ event.end|date:":i"}}{% endif %}{{ event.end|date:"a"}} {{event.more_on}} {{ event.notes }}</p>
+
             <div class="person">
                 <div class="name"><h4>{{ event.feature_name }}</h4></div>
                 {% if event.image %}
@@ -53,10 +53,10 @@
     <ul>
         {% for event in future_event %}
         <li>
-            <h3>{{ event.start|date:"f" }}<span class="medium">:</span>{{ event.start|date:"i" }}</h3>
-            <p><span class="highlight">{{ event.event_type }}</span>: {{ event.title }} in the {{ event.location }} until about {{ event.end|date:"f" }}{% if event.end|date:"i" %}{{ event.end|date:":i"}}{% endif %}{{ event.end|date:"a"}} {{event.more_on}}</p>
+            <h3>{{ event.start|date:"g" }}<span class="medium">:</span>{{ event.start|date:"i" }}</h3>
+            <p><span class="highlight">{{ event.event_type }}</span>: {{ event.title }} in the {{ event.location }} until about {{ event.end|date:"g" }}{% if event.end|date:"i" %}{{ event.end|date:":i"}}{% endif %}{{ event.end|date:"a"}} {{event.more_on}} {{ event.notes }}</p>
             <div class="person">
-                <div class="name"><h4>{{ event.feature_name }}</h4></div>
+                <div class="name"><h4>{{ event.template_headline }}</h4></div>
                 {% if event.image %}
                 <div class="image"><img src="{{ event.processed_image }}"></div>
                 {% endif %}
@@ -75,8 +75,10 @@
     <ul>
         {% for event in past_event %}
         <li>
-            <p><span class="highlight">{{ event.event_type }}</span>: {{ event.title }}. {{event.more_on}}</p>
-            <div class="image"><img src="{{ event.processed_image }}"></div>
+            <p><span class="highlight">{{ event.event_type }}</span>: {{ event.title }}. {{event.more_on_past}}</p>
+            {% if event.image %}
+            <div class="image"><img src="{{ event.processed_image }}"></div>   
+            {% endif %}
             <p class="divider">* * *</p>
         </li>
         {% endfor %}

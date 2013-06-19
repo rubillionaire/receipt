@@ -55,3 +55,7 @@ td, th {
     margin-left: 4em;
     width: 400px;
 }
+
+#id_artist {
+    height: 200px;
+}

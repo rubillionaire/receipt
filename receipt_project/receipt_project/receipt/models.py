@@ -90,6 +90,11 @@ class Event(TimeFramedModel):
         null=False,
         blank=True)
 
+    headline = models.CharField(
+        max_length=255,
+        null=False,
+        blank=True)
+
     notes = models.TextField(
         default='',
         null=False,
@@ -121,7 +126,9 @@ class Event(TimeFramedModel):
 
     # used for the large text
     # associated with each event
-    def feature_name(self):
+    def template_headline(self):
+        if self.headline:
+            return self.headline
         artists = self.artist.all()
         if len(artists) > 1:
             return self.title
@@ -139,8 +146,23 @@ class Event(TimeFramedModel):
             else:
                 return ''
         else:
-            artists_list = ', '.join([a.first_name for a in artists])
-            return artists_list
+            artists_list = ', '.join([a.first_name + " " + a.last_name \
+                                      for a in artists])
+            return 'Includes {0}.'.format(artists_list)
+
+
+    def more_on_past(self):
+        artists = self.artist.all()
+        if len(artists) == 1:
+            if artists[0].url:
+                return 'More on {0} at {1}.'.format(artists[0].first_name,
+                                                    artists[0].url)
+            else:
+                return ''
+        else:
+            artists_list = ', '.join([a.first_name + " " + a.last_name \
+                                      for a in artists])
+            return 'Included {0}.'.format(artists_list)
 
     def __unicode__(self):
         if len(self.title) > 0:

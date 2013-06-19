@@ -11,8 +11,12 @@ from .models import Event, Show, Artist
 class EventAdmin(admin.ModelAdmin):
     ordering = ('start', )
 
-    list_display = ('__unicode__', 'admin_artists',)
+    list_display = ('__unicode__', 'admin_artists', 'start',)
     readonly_fields = ('description', )
+
+    fields = ('description', 'image', 'headline', 'title',
+              'event_type','location', 'featured', 'artist',
+              'start', 'end')
 
     def description(self, obj):
         four_hours = timedelta(hours=4)
