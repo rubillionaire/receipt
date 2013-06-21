@@ -15,7 +15,7 @@ from braces.views import LoginRequiredMixin
 from .models import Event
 from .printer_mgmt import PrinterMgmt
 
-receipt_printer = PrinterMgmt('Star_FVP10')
+receipt_printer = PrinterMgmt()
 
 # get the weather every hour.
 # if its older than an hour,
