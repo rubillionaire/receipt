@@ -14,7 +14,7 @@ class EventAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'admin_artists', 'start',)
     readonly_fields = ('description', )
 
-    fields = ('description', 'image', 'headline', 'title',
+    fields = ('headline', 'description', 'image', 'title',
               'event_type','location', 'featured', 'artist',
               'start', 'end')
 

@@ -3,14 +3,19 @@ from datetime import datetime, timedelta
 import logging
 
 from django.contrib import messages
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import (
     CreateView, UpdateView, DetailView)
 from django.views.generic.base import View
+from django.utils import simplejson
 
 from braces.views import LoginRequiredMixin
 
 from .models import Event
+from .printer_mgmt import PrinterMgmt
+
+receipt_printer = PrinterMgmt('Star_FVP10')
 
 # get the weather every hour.
 # if its older than an hour,
@@ -95,6 +100,20 @@ class ReceiptPrintView(ReceiptEventView):
     def get(self, request, *args, **kwargs):
 
         return render(request, self.template_name, {'now': self.now})
+
+
+class ReceiptPrintDevView(ReceiptPrintView):
+    template_name = 'receipt/daily_dev.html'
+
+
+class QueueCheckView(View):
+    def get(self, request, *args, **kwargs):
+        print "\n\n---\nPrint Queue"
+        print receipt_printer.queue
+        print "---\n\n"
+        status = {'print_status': 'being checked'}
+        data = simplejson.dumps(status)
+        return HttpResponse(data, mimetype='application/json')
 
 
 class EventActionMixin(object):
