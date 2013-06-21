@@ -185,6 +185,8 @@ li {
 
 footer img {
     display: block;
+    position: relative;
+    margin: 0 auto;
 }
 
 @media  screen {
@@ -192,8 +194,12 @@ footer img {
 }
 
 @media print {
-    body { }
-    /*  prints page upside down
-    html {  margin: 0.4pc 0 ;   -moz-transform: rotate(180deg); } */
+    body {
+        margin: 1.28pc
+    }
+    html {
+        margin: 0.4pc 0 ;
+        -moz-transform: rotate(180deg);
+    }
 
 }

@@ -12,6 +12,8 @@
         date = moment();
     }
 
+    // updates the fontend given the latest
+    // state of the date object.
     var update = function () {
         var url = '/events/' + date.format('YYYY-MM-DDTHH-mm');
         $.get(url, function (result) {
@@ -19,6 +21,19 @@
         });
     };
 
+    // notifies server that a print
+    // has a occured, so it can check
+    // the queue
+    var printed = function () {
+        var url = '/printed/';
+        $.get(url, function (status) {
+            console.log(status);
+        });
+    };
+
+    // functions that adjust the date
+    // object's time based on which 
+    // key is pressed
     var pressed_left = function () {
         // console.log('left');
         date.subtract('days', 1);
@@ -48,7 +63,8 @@
         40: pressed_down
     };
 
-    // bind window to key event
+    // watch for all key presses, in order
+    // to adjust date object accordingly
     $(win).on('keydown', function (e) {
         var pressed = e.which;
 
@@ -57,10 +73,13 @@
             key_map[pressed]();
         }
     });
+
+    // map click to print function
+    // notify server that a new print
+    // has been added to the local queue
     $(win).on('click', function (e) {
-        // notify server about a print
-        // in order to check queue
         // win.print();
+        // printed();
     });
 
     // update the page every minute
@@ -70,7 +89,8 @@
     };
     win.setInterval(update_now, 60000);
 
-    // initial load
+    // grab the initial data set based
+    // on the date object.
     update();
 
 })(window, $);

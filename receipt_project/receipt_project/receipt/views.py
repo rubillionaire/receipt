@@ -109,7 +109,7 @@ class ReceiptPrintDevView(ReceiptPrintView):
 class QueueCheckView(View):
     def get(self, request, *args, **kwargs):
         print "\n\n---\nPrint Queue"
-        print receipt_printer.queue
+        print receipt_printer.info
         print "---\n\n"
         status = {'print_status': 'being checked'}
         data = simplejson.dumps(status)

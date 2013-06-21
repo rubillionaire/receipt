@@ -2,7 +2,7 @@ import cups
 
 
 class PrinterMgmt():
-    def __init__(self, printer_name):
+    def __init__(self):
         self.conn = cups.Connection()
         self.info = self.get_printer(u'Star FVP10')
         self.destination = self.get_destination('Star_FVP10')
