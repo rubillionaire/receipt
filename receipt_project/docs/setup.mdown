@@ -79,3 +79,7 @@ risdworks/itango
 
 - django admin
 	risdmuseum/locallymade
+
+# email server
+
+http://www.phase2technology.com/blog/how-to-enable-local-smtp-server-postfix-on-os-x-leopard/

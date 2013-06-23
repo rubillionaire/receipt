@@ -3,6 +3,7 @@ from email.mime.text import MIMEText
 import smtplib
 from subprocess import call
 import time
+import os
 
 import cups
 
@@ -86,7 +87,7 @@ class PrinterMgmt():
         s.ehlo()
         s.starttls()
         s.ehlo()
-        s.login(sender, '')
+        s.login(sender, os.environ['email_pw'])
         s.sendmail(sender, recipient, msg.as_string())
         s.quit()
         pass
