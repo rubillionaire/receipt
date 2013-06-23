@@ -1,0 +1,20 @@
+{% extends "base_dev.html" %}
+
+
+{% block extracss %}
+{% endblock extracss %}
+
+
+{% block content %}
+<div id="receipt"></div>
+{% endblock content %}
+
+
+{% block extra_before_js %}
+<script>
+    window.now = "{{ now|date:'Y-m-dTH-i'}}";
+</script>
+{% endblock extra_before_js %}
+
+{% block extrajs %}
+{% endblock extrajs %}
