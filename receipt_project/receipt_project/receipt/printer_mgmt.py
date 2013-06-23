@@ -82,13 +82,13 @@ class PrinterMgmt():
         msg['To'] = ', '.join(recipient)
         msg.attach(MIMEText('The receipt printer needs a fresh roll of paper.'))
 
-        s = smtplib.SMTP('smtp.gmail.com',587)
+        s = smtplib.SMTP('smtp.gmail.com', 587)
         s.ehlo()
         s.starttls()
         s.ehlo()
         s.login(sender, '')
         s.sendmail(sender, recipient, msg.as_string())
-        s.close()
+        s.quit()
         pass
 
     def check(self):
@@ -115,5 +115,6 @@ class PrinterMgmt():
 
 if __name__ == '__main__':
     receipt_printer = PrinterMgmt()
-    status = receipt_printer.check()
-    print status
+    # status = receipt_printer.check()
+    # print status
+    receipt_printer.notify()
