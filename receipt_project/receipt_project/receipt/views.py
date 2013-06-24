@@ -113,32 +113,3 @@ class QueueCheckView(View):
         print "---\n\n"
         data = simplejson.dumps(status)
         return HttpResponse(data, mimetype='application/json')
-
-
-class EventActionMixin(object):
-    @property
-    def action(self):
-        msg = "{0} is missing action."
-        msg = msg.format(self.__class__)
-        raise NotImplementedError(msg)
-
-    def form_valid(self, form):
-        msg = "Event {0}"
-        msg = msg.format(self.action)
-        messages.info(self.request, msg)
-
-        return super(EventActionMixin, self).form_valid(form)
-
-
-class EventCreateView(LoginRequiredMixin, EventActionMixin, CreateView):
-    model = Event
-    action = "created"
-
-
-class EventUpdateView(LoginRequiredMixin, EventActionMixin, UpdateView):
-    model = Event
-    action = "updated"
-
-
-class EventDetailView(DetailView):
-    model = Event

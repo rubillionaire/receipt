@@ -14,9 +14,9 @@ class EventAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'admin_artists', 'start',)
     readonly_fields = ('description', )
 
-    fields = ('headline', 'description', 'image', 'title',
-              'event_type','location', 'featured', 'artist',
-              'start', 'end')
+    fields = ('headline', 'description', 'image', 'notes',
+              'title', 'event_type','location', 'featured',
+              'artist', 'start', 'end')
 
     def description(self, obj):
         four_hours = timedelta(hours=4)

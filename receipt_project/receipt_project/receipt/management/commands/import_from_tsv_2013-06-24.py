@@ -11,7 +11,7 @@ from ...models import Event, Artist
 
 class ReceiptData():
     """
-    Deal with Receipt Data
+    Dea with Receipt Data
     """
 
     _default_schema = {
