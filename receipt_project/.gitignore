@@ -16,3 +16,6 @@ build
 
 # Logs:
 *.log
+
+images_to_import/*.jpg
+images_to_import/*.JPG
