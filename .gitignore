@@ -1,3 +1,4 @@
 .env
 
-receipt/management/commands/images_to_import/
+images_to_import/
+media/

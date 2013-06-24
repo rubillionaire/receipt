@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import signals
 
 from model_utils import Choices
 from model_utils.models import TimeFramedModel
@@ -9,6 +10,11 @@ from model_utils.models import TimeFramedModel
 # {{ Brian Goldberg }} {{ is holding
 # Office Hours - an open format where
 # you can talk with experts }}
+
+
+def process_image(sender, instance, created, **kwargs):
+    
+    pass
 
 
 class Show(models.Model):

@@ -1,8 +1,9 @@
 from datetime import datetime as dt
 from datetime import timedelta
 import pytz
+from subprocess import call
 from os import walk
-from os.path import abspath, dirname
+from os.path import abspath, dirname, join
 
 import json
 import time
@@ -21,8 +22,8 @@ class ReceiptImages():
     def __init__(self, filepath):
         self.filepath = filepath
         # reference to all images
-        self.images = self.read()
         self.timezone = pytz.timezone('US/Eastern')
+        self.images = self.read()
 
     def date(self, file):
         """
@@ -44,7 +45,7 @@ class ReceiptImages():
                 for f in files:
                     if (f.endswith('.jpg')) or (f.endswith('.JPG')):
                         image = {}
-                        image['path'] = abspath(f)
+                        image['path'] = '{0}{1}'.format(self.filepath, f)
                         image['name'] = f
                         image['day'] = {}
                         image['day']['start'] = self.date(f)
@@ -58,12 +59,38 @@ class Command(BaseCommand):
     args = "No arguments."
     help = "Adds images to events based on file names."
 
+    def process_image(self, event):
+        directory = '/'.join(event.image.path.split('/')[0:-1])
+        extension = event.image.path.split('.')[-1]
+
+        resized_path = '{0}/resized.{1}'.format(directory, extension)
+        halftone_path = '{0}/processed.{1}'.format(directory, extension)
+
+        convert_image = 'convert {0} '.format(event.image.path) +\
+                        '-resize 259x259^ ' +\
+                        '{0}'.format(resized_path)
+
+        halftone_image = 'convert ' +\
+                             '{0} '.format(resized_path) +\
+                             '-colorspace Gray -ordered-dither h4x4a ' +\
+                             '{0}'.format(halftone_path)
+
+        try:
+            call(convert_image, shell=True)
+            call(halftone_image, shell=True)
+            print "computed!\n\n\n------"
+        except:
+            print "----------\n\n\n\ncan not compute!\n\n\n------"
+        pass
+
     def handle(self, *args, **options):
+        print "Reading in file paths."
         # get reference to images
         app_dir = dirname(abspath(__file__))
         filepath = '{0}/images_to_import/'.format(app_dir)
         images = ReceiptImages(filepath).images
 
+        print "Matching events."
         # track matches and no matches
         no_match = []
         matches = []
@@ -90,16 +117,24 @@ class Command(BaseCommand):
                             break
                     if not found_match:
                         no_match.append(img['name'])
+                        print "skipped {0}".format(img['name'])
                         continue
                 else:
                     no_match.append(img['name'])
+                    print "skipped {0}".format(img['name'])
                     continue
-
-                with (img['path'], 'rb') as img_contents:
+                print img['path']
+                with open(img['path'], 'r') as img_contents:
+                    print event
                     event.image.save(img['name'], File(img_contents),
                                      save=True)
+
                 event.save()
                 matches.append({'name': img['path'], 'id': event.pk})
+                print "{0}".format({'name': img['path'], 'id': event.pk})
+
+                # process images
+                self.process_image(event)
                 # images are stored in directories
                 # that are named by time. make sure
                 # there is at least a second between
@@ -112,13 +147,13 @@ class Command(BaseCommand):
         no_match_file = "{0}/images_to_import/".format(app_dir) +\
             "no_image_match-{0}.txt".format(dt.now().strftime('%Y-%m-%d'))
 
-        with (no_match_file, 'w') as documentation:
+        with open(no_match_file, 'w') as documentation:
             documentation.write("\n".join(no_match))
 
         match_file = "{0}/images_to_import/".format(app_dir) +\
             "image-matches-{0}.txt".format(dt.now().strftime('%Y-%m-%d'))
 
-        with (match_file, 'w') as documentation:
+        with open(match_file, 'w') as documentation:
             documentation.write(json.dumps(matches, separators=(',', ':')))
 
         success_msg = 'All images imported'

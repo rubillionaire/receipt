@@ -19,3 +19,5 @@ build
 
 images_to_import/*.jpg
 images_to_import/*.JPG
+
+receipt/management/commands/images_to_import/
