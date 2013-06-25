@@ -106,6 +106,47 @@ class ReceiptPrintDevView(ReceiptPrintView):
     template_name = 'receipt/daily_dev.html'
 
 
+class ReceiptImageDevView(View):
+    """test out images"""
+    images = ["processed.jpg",
+              "processed_h4x4o.jpg",
+              "processed_h6x6a.jpg",
+              "processed_2x1.jpg",
+              "processed_h6x6o.jpg",
+              "processed_2x2.jpg",
+              "processed_h8x8a.jpg",
+              "processed_3x3.jpg",
+              "processed_h8x8o.jpg",
+              "processed_4x1.jpg",
+              "processed_moreoffsethalftone.jpg",
+              "processed_4x4.jpg",
+              "processed_o2x2.jpg",
+              "processed_6x1.jpg",
+              "processed_o3x3.jpg",
+              "processed_8x1.jpg",
+              "processed_o4x4.jpg",
+              "processed_8x8.jpg",
+              "processed_o8x8.jpg",
+              "processed_checks.jpg",
+              "processed_offsethalftone.jpg",
+              "processed_h16x16o.jpg",
+              "processed_threshold.jpg",
+              "processed_h4x4a.jpg"]
+    images.sort()
+
+    # ids that are set up.
+    # [22, 136, 71]
+
+    template_name = 'receipt/image_dev.html'
+
+    def get(self, request, event_id):
+
+        event = Event.objects.get(pk=event_id)
+
+        return render(request, self.template_name,
+                      {'event': event,
+                       'images': self.images})
+
 class QueueCheckView(View):
     def get(self, request, *args, **kwargs):
         print "\n\n---\nPrint Queue"

@@ -1,0 +1,44 @@
+{% extends "base_nojs.html" %}
+
+
+{% block extracss %}
+{% endblock extracss %}
+
+
+{% block content %}
+<div id="receipt">
+{% if event %}
+{% for image in images %}
+<section class="upcoming">
+    <h2><span>----------------------------------</span><br>Today's upcoming events<br>
+    {{ image }}
+    <span>----------------------------------</span></h2>
+
+    <ul>
+        <li>
+            <h3>{{ event.start|date:"g" }}<span class="medium">:</span>{{ event.start|date:"i" }}</h3>
+            <p><span class="highlight">{{ event.event_type }}</span>: {{ event.title }} in the {{ event.location }} until about {{ event.end|date:"g" }}{% if event.end|date:"i" %}{{ event.end|date:":i"}}{% endif %}{{ event.end|date:"a"}} {{event.more_on}} {{ event.notes }}</p>
+            <div class="person">
+                <div class="name"><h4>{% autoescape off %}{{ event.template_headline }}{% endautoescape %}</h4></div>
+                {% if event.image %}
+                <div class="image"><div><img src="{{ event.media_directory }}/{{ image }}"></div></div>
+                {% endif %}
+            </div>
+            <p class="divider">* * *</p>
+        </li>
+    </ul>
+</section>
+{% endfor %}
+{% endif %}
+</div>
+{% endblock content %}
+
+
+{% block extra_before_js %}
+<script>
+    window.now = "{{ now|date:'Y-m-dTH-i'}}";
+</script>
+{% endblock extra_before_js %}
+
+{% block extrajs %}
+{% endblock extrajs %}

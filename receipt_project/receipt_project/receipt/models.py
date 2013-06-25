@@ -110,6 +110,11 @@ class Event(TimeFramedModel):
         extension = self.image.url.split('.')[-1]
         return '{0}/processed.{1}'.format(directory, extension)
 
+    # media directory for event images
+    def media_directory(self):
+        directory = '/'.join(self.image.url.split('/')[0:-1])
+        return directory
+
     def location_description(self):
         location_map = {
             'Lower Farago Gallery': u'here',

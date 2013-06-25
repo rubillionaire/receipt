@@ -3,7 +3,8 @@ from django.conf.urls.static import static
 from django.conf.urls import patterns, url
 
 from .views import ReceiptPrintView, ReceiptEventView,\
-                   QueueCheckView, ReceiptPrintDevView
+                   QueueCheckView, ReceiptPrintDevView,\
+                   ReceiptImageDevView
 
 urlpatterns = patterns(
     '',
@@ -16,6 +17,11 @@ urlpatterns = patterns(
         r'^dev/?$',
         view=ReceiptPrintDevView.as_view(),
         name="receipt_dev"
+    ),
+    url(
+        r'^dev/images/(?P<event_id>\d+)/?$',
+        view=ReceiptImageDevView.as_view(),
+        name="receipt_images"
     ),
     url(
         r'^events/(?P<time>[-\w]+)',
