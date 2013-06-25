@@ -12,11 +12,6 @@ from model_utils.models import TimeFramedModel
 # you can talk with experts }}
 
 
-def process_image(sender, instance, created, **kwargs):
-    
-    pass
-
-
 class Show(models.Model):
     title = models.CharField(
         max_length=255,
@@ -133,13 +128,34 @@ class Event(TimeFramedModel):
     # used for the large text
     # associated with each event
     def template_headline(self):
-        if self.headline:
-            return self.headline
-        artists = self.artist.all()
-        if len(artists) > 1:
-            return self.title
-        else:
-            return '{0} {1}'.format(artists[0].first_name, artists[0].last_name)
+
+        hl = self.headline.strip()
+
+        # check for shorties.
+        if len(hl) <= 10:
+            return hl.replace(' ', '&nbsp;')
+
+        # check for short parts that can be on
+        # the same line as their preceding line
+        hl_split = hl.split(" ")
+        if len(hl_split) >= 3:
+            first_two = len(hl_split[0]) + len(hl_split[1])
+            if first_two <= 9:
+                first_two = '{0}&nbsp;{1}'.format(hl_split[0],
+                                                  hl_split[1])
+                return '{0} {1}'.format(first_two,
+                                        ' '.join(hl_split[2:]))
+
+        # check for long parts
+        make_smaller = False
+        for piece in hl_split:
+            if len(piece) > 10:
+                make_smaller = True
+
+        if make_smaller:
+            return '<span class="smaller">{0}</span>'.format(hl)
+
+        return hl
 
     # used for the last sentence
     # in the description

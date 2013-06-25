@@ -118,6 +118,9 @@ div.person .name h4 {
     margin: 0 auto;
     width: 16.2pc;
 }
+div.person .name h4 span.smaller {
+    font-size: 58pt;
+}
 
 .permanent h3 { 
     font-family: "Simplon_lm";

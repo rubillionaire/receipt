@@ -33,7 +33,7 @@
             <p><span class="highlight">{{ event.event_type }}</span>: {{ event.title }} in the {{ event.location }} until about {{ event.end|date:"g" }}{% if event.end|date:"i" %}{{ event.end|date:":i"}}{% endif %}{{ event.end|date:"a"}} {{event.more_on}} {{ event.notes }}</p>
 
             <div class="person">
-                <div class="name"><h4>{{ event.feature_name }}</h4></div>
+                <div class="name"><h4>{% autoescape off %}{{ event.template_headline }}{% endautoescape %}</h4></div>
                 {% if event.image %}
                 <div class="image"><div><img src="{{ event.processed_image }}"></div></div>   
                 {% endif %}
@@ -56,7 +56,7 @@
             <h3>{{ event.start|date:"g" }}<span class="medium">:</span>{{ event.start|date:"i" }}</h3>
             <p><span class="highlight">{{ event.event_type }}</span>: {{ event.title }} in the {{ event.location }} until about {{ event.end|date:"g" }}{% if event.end|date:"i" %}{{ event.end|date:":i"}}{% endif %}{{ event.end|date:"a"}} {{event.more_on}} {{ event.notes }}</p>
             <div class="person">
-                <div class="name"><h4>{{ event.template_headline }}</h4></div>
+                <div class="name"><h4>{% autoescape off %}{{ event.template_headline }}{% endautoescape %}</h4></div>
                 {% if event.image %}
                 <div class="image"><div><img src="{{ event.processed_image }}"></div></div>
                 {% endif %}
