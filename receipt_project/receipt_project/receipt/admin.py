@@ -83,6 +83,6 @@ admin.site.register(Show, ShowAdmin)
 
 
 class ArtistAdmin(admin.ModelAdmin):
-    pass
+    ordering = ('first_name', )
 
 admin.site.register(Artist, ArtistAdmin)

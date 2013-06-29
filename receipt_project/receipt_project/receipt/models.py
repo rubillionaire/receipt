@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 from django.db.models import signals
 
@@ -41,10 +43,11 @@ class Artist(models.Model):
     twitterhandle = models.CharField(max_length=255, null=False, blank=True)
 
     def __unicode__(self):
-        if self.pseudonym:
-            return u'{0}'.format(self.pseudonym)
-        else:
-            return u'{0} {1}'.format(self.first_name, self.last_name)
+        return u'{0} {1}'.format(self.first_name, self.last_name)
+
+    class Meta:
+        ordering = ['first_name']
+            
 
 
 class Event(TimeFramedModel):
@@ -72,12 +75,9 @@ class Event(TimeFramedModel):
     TYPES = Choices(
         'Assembled',
         'Artist Lab',
-        'Curator, Assembly',
-        'Curator, Assembly + Artist Lab',
         'Demo + Discourse',
         'Office Hours',
-        'Spotlight',
-        'Spotlight with Franny',)
+        'Spotlight',)
     event_type = models.CharField(
         max_length="255",
         choices=TYPES,
@@ -104,6 +104,15 @@ class Event(TimeFramedModel):
     image = models.FileField(upload_to="events/%Y-%m-%d/%H-%M-%S",
                              null=True,
                              blank=True)
+
+    def _has_occurred(self):
+        # return 1 if has occurred.
+        # return 0 if has occurred.
+        now = datetime.now()
+        if now < self.end:
+            return 0
+        else:
+            return 1
 
     def processed_image(self):
         directory = '/'.join(self.image.url.split('/')[0:-1])
@@ -138,7 +147,12 @@ class Event(TimeFramedModel):
 
         # check for shorties.
         if len(hl) <= 10:
-            return hl.replace(' ', '&nbsp;')
+            # check for image
+            if self.image:
+                return hl
+            else:
+                # if no image, make one line
+                return hl.replace(' ', '&nbsp;')
 
         # check for short parts that can be on
         # the same line as their preceding line

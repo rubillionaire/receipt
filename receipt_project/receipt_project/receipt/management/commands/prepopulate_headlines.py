@@ -13,8 +13,12 @@ class Command(BaseCommand):
             try:
                 artists = event.artist.all()
                 if artists:
-                    event.headline = "{0} {1}".format(artists[0].first_name,
-                                                      artists[0].last_name)
+                    if artists[0].pseudonym:
+                        event.headline = "{0}".format(artists[0].pseudonym)
+                    else:
+                        event.headline = "{0} {1}".format(
+                            artists[0].first_name,
+                            artists[0].last_name)
                     event.save()
                 else:
                     continue
