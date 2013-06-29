@@ -77,7 +77,7 @@
         <li>
             <p><span class="highlight">{{ event.event_type }}</span>: {{ event.title }}. {{event.more_on_past}}</p>
             {% if event.image %}
-            <div class="image"><div><img src="{{ event.processed_image }}"></div></div>   
+            <div class="image"><img src="{{ event.processed_image }}"></div>   
             {% endif %}
             <p class="divider">* * *</p>
         </li>
@@ -92,10 +92,10 @@
     <h2><span>------------------------------- </span><br>On view until November 3rd<br>
     <span>------------------------------- </span></h2>
         <h3>Upper Farago</h3>
-        <p>55 recent prints, drawings and sculptures from 36 artists selected from the Museum's permanent collection</p>
+        <p>55 recent prints, drawings and sculptures from 36 artists selected from the Museum's permanent collection.</p>
         <p class="divider">* * *</p>
         <h3>Spalter New Media Gallery</h3>
-        <p>11 videos from 7 artists selected from the Museum's permanent collection </p>
+        <p>11 videos from 7 artists selected from the Museum's permanent collection.</p>
         <p class="divider">* * *</p>
         <h3>Elsewhere in the Museum</h3>
         <p>The anchor symbol next to artworks throughout the Museum denotes pieces created in the Providence area.
@@ -109,8 +109,8 @@
 {# always show #}
 <footer>
     <h2><span>------------------------------- </span><br>Thank you for coming,<br>please come again<br><span>------------------------------- </span></h2>
-        <p>There are {{ future_events_count }} more events from local artists including {{ random_future_artist_1.first_name }} {{random_future_artist_1.last_name }} and {{ random_future_artist_2.first_name }} {{ random_future_artist_2.last_name }}. Visit <span class="highlight">risdmuseum.org</span> on your phone or desktop to see photos of today's events and details on future events.</p>
+        <p>There are {{ future_events_count }} more events from local artists including {{ random_future_artist_1.first_name }} {% if random_future_artist_1.last_name %}{{random_future_artist_1.last_name }}{% endif%} and {{ random_future_artist_2.first_name }} {% if random_future_artist_2.last_name %}{{ random_future_artist_2.last_name }}{% endif%}. Visit <span class="highlight">risdmuseum.org</span> on your phone or desktop to see photos of today's events and details on future events.</p>
         <p>This daily guide to the exhibit was created by The Design Office of Providence, R.I. </p>
         <p class="divider">* * *</p>
-        <p><img src="/static/img/risd_logo6.png" width="80"><br><strong>RISD Museum</strong>&nbsp;/&nbsp;20 North Main St,<br>Providence, RI 02906 /<br>@risdmuseum #locallymade /<br>risdmuseum.org</p>
+        <p><img src="/static/img/risd_logo6.png" width="80"><br><span class="highlight">RISD Museum</span>&nbsp;/&nbsp;20 North Main Street<br>Providence, R.I. 02906 /<br>@risdmuseum #oneroommuseum /<br>risdmuseum.org</p>
 </footer>
