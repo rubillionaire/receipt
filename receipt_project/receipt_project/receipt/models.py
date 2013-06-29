@@ -1,10 +1,13 @@
 from datetime import datetime
+import pytz
 
 from django.db import models
-from django.db.models import signals
 
 from model_utils import Choices
 from model_utils.models import TimeFramedModel
+
+
+timezone = pytz.timezone('US/Eastern')
 
 
 # At {{ 9am }}, this {{ morning }},
@@ -47,10 +50,10 @@ class Artist(models.Model):
 
     class Meta:
         ordering = ['first_name']
-            
 
 
 class Event(TimeFramedModel):
+
     featured = models.BooleanField(
         default=False,
         blank=False,
@@ -104,15 +107,6 @@ class Event(TimeFramedModel):
     image = models.FileField(upload_to="events/%Y-%m-%d/%H-%M-%S",
                              null=True,
                              blank=True)
-
-    def _has_occurred(self):
-        # return 1 if has occurred.
-        # return 0 if has occurred.
-        now = datetime.now()
-        if now < self.end:
-            return 0
-        else:
-            return 1
 
     def processed_image(self):
         directory = '/'.join(self.image.url.split('/')[0:-1])
