@@ -83,3 +83,11 @@ risdworks/itango
 # email server
 
 http://www.phase2technology.com/blog/how-to-enable-local-smtp-server-postfix-on-os-x-leopard/
+
+# launchd process for weather
+
+The plist for the launchd process is stashed in 
+	
+	/Users/risdworks/Library/LaunchAgents/com.dailyguide.weather.plist
+
+Per the definition, it is updated every hour, and on load.

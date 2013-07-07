@@ -54,3 +54,10 @@ Highsmith }}
 
 
 Items at the bottom of the receipt that do not have.
+
+
+# running migration on model on production machine.
+
+python manage.py schemamigration receipt --auto --settings=receipt_project.settings.production
+
+python manage.py migrate receipt --settings=receipt_project.settings.production

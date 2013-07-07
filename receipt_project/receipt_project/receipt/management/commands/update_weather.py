@@ -39,7 +39,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         updater = WeatherUpdater()
-        weather_data = updater.update_test()
+        weather_data = updater.update()
 
         try:
             # get weather model to update
@@ -58,6 +58,9 @@ class Command(BaseCommand):
 
             weather_tracker.temp_str = \
                 weather_data['current_observation']['temperature_string']
+
+            weather_tracker.weather = \
+                weather_data['current_observation']['weather']
 
             weather_tracker.save()
 

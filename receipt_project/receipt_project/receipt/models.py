@@ -256,8 +256,15 @@ class Weather(models.Model):
                                  max_digits=4,
                                  decimal_places=1)
     temp_str = models.CharField('Temperature String',
-                                max_length=255)
+                                max_length=255,
+                                blank=True,
+                                null=False)
+    weather = models.CharField('Weather String',
+                               max_length=255,
+                               blank=True,
+                               null=False)
+
     updated = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
-        return self.temp_str
+        return "{0} and {1}".format(self.temp_str, self.weather)

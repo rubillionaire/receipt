@@ -87,7 +87,7 @@ class PrinterMgmt():
         s.ehlo()
         s.starttls()
         s.ehlo()
-        s.login(sender, os.environ['email_pw'])
+        s.login(sender, os.environ['EMAILPW'])
         s.sendmail(sender, recipient, msg.as_string())
         s.quit()
         pass

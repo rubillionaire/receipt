@@ -4,10 +4,12 @@
     <br>Welcome to Locally Made<br>
     <span>----------------------------------</span></h2>
     
-    <p><strong>It is now</strong>: {{ now|date:"fa" }} on {{ now|date:"l, F j Y" }}.</p>
+    <p><strong>It is now</strong>: {{ now|date:"fa" }} on {{ now|date:"l," }}<br/>{{ now|date:"F j Y" }}.</p>
     <p><strong>You are at</strong>: the Lower Farago entrance of the RISD Museum.</p>
 
-    <p><strong>Outside it is</strong>: 65&#176;F and sunny</p>
+    {% if temp %}
+    <p><strong>Outside it is</strong>: {{ temp.weather|lower }} and {{ temp.temp_f }}&#176;F</p>
+    {% endif %}
 
     <h2><span>----------------------------------</span></h2>
 

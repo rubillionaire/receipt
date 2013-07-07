@@ -1,23 +1,17 @@
 # receipt/views.py
 from datetime import datetime, timedelta
-import logging
+import pytz
+import sys
 
-from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.generic import (
-    CreateView, UpdateView, DetailView)
 from django.views.generic.base import View
 from django.utils import simplejson
 
-from braces.views import LoginRequiredMixin
-
-from .models import Event
+from .models import Event, Weather
 from .printer_mgmt import PrinterMgmt
 
 receipt_printer = PrinterMgmt()
-
-logger = logging.getLogger(__name__)
 
 
 class ReceiptEventView(View):
@@ -26,8 +20,28 @@ class ReceiptEventView(View):
     # time objects for querying
     # past/present/future events
     # start with july 18th at 10am
-    now = datetime.strptime('07 18 2013 10 00', '%m %d %Y %H %M')
-    # now = datetime.now()
+    # now = datetime.strptime('07 18 2013 10 00', '%m %d %Y %H %M')
+    now = datetime.now()
+
+    def weather(self, now):
+        last_hour = now + timedelta(hours=-1.5)
+
+        # localize last hour
+        utc = pytz.UTC
+        last_hourl = utc.localize(last_hour)
+
+        # get weather data
+        data = Weather.objects.all()[0]
+
+        print >>sys.stderr, "\n\n---\n"
+        print >>sys.stderr, "{0}".format(last_hourl)
+        print >>sys.stderr, "{0}".format(data.updated)
+        print >>sys.stderr, "\n---\n\n"
+
+        if data.updated > last_hourl:
+            return data
+        else:
+            return ''
 
     def events(self, now):
         today = datetime.strptime(now.strftime('%m %d %y'), '%m %d %y')
@@ -72,6 +86,8 @@ class ReceiptEventView(View):
             random_future_artist_1,\
             random_future_artist_2 = self.events(self.now)
 
+        current_temp = self.weather(self.now)
+
         return render(request, self.template_name, {
             'past_event': past,
             'present_event': present,
@@ -80,7 +96,8 @@ class ReceiptEventView(View):
             'random_future_artist_1': random_future_artist_1,
             'random_future_artist_2': random_future_artist_2,
             'now': self.now,
-            'today': today})
+            'today': today,
+            'temp': current_temp})
 
 
 class ReceiptPrintView(ReceiptEventView):
