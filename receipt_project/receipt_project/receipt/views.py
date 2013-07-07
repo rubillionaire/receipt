@@ -33,10 +33,10 @@ class ReceiptEventView(View):
         # get weather data
         data = Weather.objects.all()[0]
 
-        print >>sys.stderr, "\n\n---\n"
-        print >>sys.stderr, "{0}".format(last_hourl)
-        print >>sys.stderr, "{0}".format(data.updated)
-        print >>sys.stderr, "\n---\n\n"
+        # print >>sys.stderr, "\n\n---\n"
+        # print >>sys.stderr, "{0}".format(last_hourl)
+        # print >>sys.stderr, "{0}".format(data.updated)
+        # print >>sys.stderr, "\n---\n\n"
 
         if data.updated > last_hourl:
             return data
