@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.dailyguide.weather</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Users/risdworks/Documents/receipt_env/repo/receipt/receipt_project/receipt_project/receipt/system_update_weather.py</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>StartInterval</key>
+	<integer>3600</integer>
+	<key>StandardErrorPath</key>
+	<string>/Users/risdworks/Documents/receipt_env/logs/weather_stderr.log</string>
+	<key>StandardOutPath</key>
+	<string>/Users/risdworks/Documents/receipt_env/logs/weather_stdout.log</string>
+</dict>
+</plist>

@@ -3,8 +3,6 @@
 import sys
 from subprocess import call
 
-print >>sys.stderr, "testing"
-
 # setup django process
 ENV_ROOT = '/Users/risdworks/Documents/receipt_env'
 
@@ -19,8 +17,10 @@ MANAGE_PATH = '/Users/risdworks/Documents/receipt_env/' +\
 command = 'python {0} update_weather '.format(MANAGE_PATH) +\
           '--settings=receipt_project.settings.production'
 
-update_weather = call(command.split(" "),
-                      shell=False)
 
-print >>sys.stderr, 'updated_weather: {0}'.format(update_weather)
-print >>sys.stderr, "completed"
+try:
+    update_weather = call(command.split(" "),
+                          shell=False)
+except:
+    from datetime import datetime
+    print >>sys.stderr, 'weather error: {0}'.format(datetime.now())

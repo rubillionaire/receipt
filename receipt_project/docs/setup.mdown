@@ -1,3 +1,22 @@
+# All of the things
+
+The things required to get things going.
+
+All of these assests are in the to_start/ directory.
+
+	- click
+		- used to move the mouse to a spot on the screen and click
+	- com.dailyguide.weather.plist
+		- used to update the weather every hour
+		- stashed in the following spot to be loaded on start
+			- /Users/risdworks/Library/LaunchAgents/com.dailyguide.weather.plist
+	- setup_env.app
+		- used to open Firefox, full screen, refresh it, and click to place cursor/notify operator that its back in business
+		- set as a login start item for user
+	- start_guide.command
+		- used to start the webserver on load
+		- set as a login start item for user
+
 ## web server
 
 - setup project
