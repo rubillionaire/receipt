@@ -1,5 +1,3 @@
-/* Project specific Javascript goes here. */
-
 (function (win, $) {
 
     // sets date to current time
@@ -17,7 +15,7 @@
     var update = function () {
         var url = '/events/' + date.format('YYYY-MM-DDTHH-mm');
         $.get(url, function (result) {
-            $('body').html(result);
+            $('#receipt').html(result);
         });
     };
 
@@ -34,33 +32,31 @@
     // functions that adjust the date
     // object's time based on which 
     // key is pressed
-    var pressed_left = function () {
-        // console.log('left');
-        date.subtract('days', 1);
-        update();
-    };
-    var pressed_right = function () {
-        // console.log('right');
-        date.add('days', 1);
-        update();
-    };
-    var pressed_up = function () {
-        // console.log('up');
-        date.add('hours', 1);
-        update();
-    };
-    var pressed_down = function () {
-        // console.log('down');
-        date.subtract('hours', 1);
-        update();
+    var pressed = {
+        left: function () {
+            date.subtract('days', 1);
+            update();
+        },
+        right: function () {
+            date.add('days', 1);
+            update();
+        },
+        up: function () {
+            date.add('hours', 1);
+            update();
+        },
+        down: function () {
+            date.subtract('hours', 1);
+            update();
+        }
     };
 
     // map key codes to functions
     var key_map = {
-        37: pressed_left,
-        39: pressed_right,
-        38: pressed_up,
-        40: pressed_down
+        37: pressed.left,
+        39: pressed.right,
+        38: pressed.up,
+        40: pressed.down
     };
 
     // watch for all key presses, in order
@@ -78,8 +74,8 @@
     // notify server that a new print
     // has been added to the local queue
     $(win).on('click', function (e) {
-        // win.print();
-        // printed();
+        win.print();
+        printed();
     });
 
     // update the page every minute
