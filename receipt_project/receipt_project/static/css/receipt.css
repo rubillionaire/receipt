@@ -192,17 +192,20 @@ footer img {
     margin: 0 auto;
 }
 
+.invisible {
+    visibility: hidden;
+}
+
 @media  screen {
     body {  margin: 4em auto; }
 }
 
 @media print {
     body {
-        margin: 1.28pc
+        margin: 1.28pc;
     }
     html {
         margin: 0.4pc 0 ;
         -moz-transform: rotate(180deg);
     }
-
 }

@@ -13,9 +13,12 @@ from .printer_mgmt import PrinterMgmt
 
 receipt_printer = PrinterMgmt()
 
+utc = pytz.UTC
+
 
 class ReceiptEventView(View):
     template_name = 'receipt/event_base.html'
+    pre_show_template_name = 'receipt/pre_show_event_base.html'
 
     # time objects for querying
     # past/present/future events
@@ -23,11 +26,10 @@ class ReceiptEventView(View):
     # now = datetime.strptime('07 18 2013 10 00', '%m %d %Y %H %M')
     now = datetime.now()
 
-    def weather(self, now):
-        last_hour = now + timedelta(hours=-1.5)
+    def weather(self):
+        last_hour = self.now + timedelta(hours=-1.5)
 
         # localize last hour
-        utc = pytz.UTC
         last_hourl = utc.localize(last_hour)
 
         # get weather data
@@ -43,30 +45,10 @@ class ReceiptEventView(View):
         else:
             return ''
 
-    def events(self, now):
-        today = datetime.strptime(now.strftime('%m %d %y'), '%m %d %y')
-        end_of_today = today + timedelta(hours=24)
-
-        past_event = Event.objects.filter(start__gte=today,
-                                          end__lt=now)\
-                                  .order_by('start')
-
-        present_event = Event.objects.filter(start__gte=today,
-                                             start__lte=now,
-                                             end__gte=now,
-                                             end__lte=end_of_today)\
-                                     .order_by('start')
-
-        future_event = Event.objects.filter(start__gt=now,
-                                            end__lte=end_of_today)\
-                                    .order_by('start')
-
-        future_events_count = Event.objects.filter(start__gt=now)\
-            .count()
-
+    def random_artists(self):
         # random future artists for footer
         random_future_events = Event.objects.filter(
-            start__gt=end_of_today)\
+            start__gt=self.end_of_today)\
             .order_by('start')[:2]
 
         random_future_artist_1 = random_future_events[0]\
@@ -75,29 +57,80 @@ class ReceiptEventView(View):
             .artist.all()[0]
         # end random future artists for footer
 
-        return past_event, present_event, future_event,\
-            today, future_events_count, random_future_artist_1,\
+        return random_future_artist_1,\
             random_future_artist_2
 
+    def future_count(self):
+        future_events_count = Event.objects.filter(start__gt=self.now)\
+            .count()
+
+        return future_events_count
+
+    def events(self):
+        past_event = Event.objects.filter(start__gte=self.today,
+                                          end__lt=self.now)\
+                                  .order_by('start')
+
+        present_event = Event.objects.filter(start__gte=self.today,
+                                             start__lte=self.now,
+                                             end__gte=self.now,
+                                             end__lte=self.end_of_today)\
+                                     .order_by('start')
+
+        future_event = Event.objects.filter(start__gt=self.now,
+                                            end__lte=self.end_of_today)\
+                                    .order_by('start')
+
+        return past_event, present_event, future_event
+
     def get(self, request, time, *args, **kwargs):
+        # set relavent times
         self.now = datetime.strptime(time, '%Y-%m-%dT%H-%M')
-        past, present, future, today,\
-            future_events_count,\
-            random_future_artist_1,\
-            random_future_artist_2 = self.events(self.now)
+        self.today = datetime.strptime(
+            self.now.strftime('%m %d %y'),
+            '%m %d %y')
+        self.end_of_today = self.today + timedelta(hours=24)
 
-        current_temp = self.weather(self.now)
+        # get weather from db
+        current_temp = self.weather()
 
-        return render(request, self.template_name, {
-            'past_event': past,
-            'present_event': present,
-            'future_event': future,
-            'future_events_count': future_events_count,
-            'random_future_artist_1': random_future_artist_1,
-            'random_future_artist_2': random_future_artist_2,
-            'now': self.now,
-            'today': today,
-            'temp': current_temp})
+        # get start date to determine which
+        # template to display. (teaser, or event data)
+        show_start_date = datetime.strptime('2013-07-18',
+                                            '%Y-%m-%d')
+
+        # random future artists for the footer
+        random_future_artist_1, random_future_artist_2 =\
+            self.random_artists()
+
+        # count of future events for the footer
+        future_events_count = self.future_count()
+
+        if self.now < show_start_date:
+            # show hasn't started, render a teaser
+            return render(
+                request, self.pre_show_template_name, {
+                    'now': self.now,
+                    'temp': current_temp,
+                    'future_events_count': future_events_count,
+                    'random_future_artist_1': random_future_artist_1,
+                    'random_future_artist_2': random_future_artist_2,
+                })
+
+        else:
+            # show is on, give them a guide
+            past, present, future = self.events()
+
+            return render(request, self.template_name, {
+                'past_event': past,
+                'present_event': present,
+                'future_event': future,
+                'future_events_count': future_events_count,
+                'random_future_artist_1': random_future_artist_1,
+                'random_future_artist_2': random_future_artist_2,
+                'now': self.now,
+                'today': self.today,
+                'temp': current_temp})
 
 
 class ReceiptPrintView(ReceiptEventView):

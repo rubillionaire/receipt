@@ -8,10 +8,18 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <!-- Le styles -->
     <link href="{% static 'css/receipt.css' %}" rel="stylesheet">
     <style>
     </style>
-    
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Use this to quickly test CSS changes in a template,
+        then move to project.css -->
     {% block extra_css %}{% endblock extra_css %}
   </head>
 
@@ -19,8 +27,13 @@
     {% block content %}
     {% endblock content %}
 
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
     {% block extra_before_js %}{% endblock extra_before_js %}
 
+    <!-- place project specific Javascript in this file -->
     <script src="{% static 'js/jquery-1.10.1.min.js' %}"></script>
     <script src="{% static 'js/moment.min.js' %}"></script>
     <script src="{% static 'js/receipt.js' %}"></script>
