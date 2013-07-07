@@ -242,3 +242,22 @@ class Event(TimeFramedModel):
         if len(self.title) > 0:
             return u'{0}'.format(self.title)
         return u'No title'
+
+
+class Weather(models.Model):
+    """
+    Updated hourly using a cron job
+    and the weather underground API
+    """
+    temp_f = models.DecimalField('Temperature Fahrenheit',
+                                 max_digits=4,
+                                 decimal_places=1)
+    temp_c = models.DecimalField('Temperature Celsius',
+                                 max_digits=4,
+                                 decimal_places=1)
+    temp_str = models.CharField('Temperature String',
+                                max_length=255)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return self.temp_str

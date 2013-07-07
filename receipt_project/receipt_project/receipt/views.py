@@ -17,17 +17,6 @@ from .printer_mgmt import PrinterMgmt
 
 receipt_printer = PrinterMgmt()
 
-# get the weather every hour.
-# if its older than an hour,
-# don't include it on the receipt
-## weather API endpoint
-# http://api.wunderground.com/api/4be1df60aabd9d45/conditions/q/RI/Providence.json
-
-# or do the weather in the browser
-# using local storage to stash
-# when it was last updated, and
-# the latest value
-
 logger = logging.getLogger(__name__)
 
 
