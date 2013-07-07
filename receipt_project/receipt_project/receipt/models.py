@@ -1,13 +1,7 @@
-from datetime import datetime
-import pytz
-
 from django.db import models
 
 from model_utils import Choices
 from model_utils.models import TimeFramedModel
-
-
-timezone = pytz.timezone('US/Eastern')
 
 
 # At {{ 9am }}, this {{ morning }},
@@ -174,29 +168,74 @@ class Event(TimeFramedModel):
     # in the description
     def more_on(self):
         artists = self.artist.all()
+        # if self.event_type == 'Assembled':
+        #     statement = 'Featuring: {0}.'.format(self.headline)
+        #     if artists[0].url:
+        #         statement += ' More at {0}.'.format(artists[0].url)
+        #     return statement
         if len(artists) == 1:
             if artists[0].url:
                 return 'More on {0} at {1}.'.format(artists[0].first_name,
                                                     artists[0].url)
             else:
                 return ''
+        elif len(artists) == 2:
+            if artists[0].url & artists[1].url:
+                if artists[0].url != artists[1].url:
+                    artists_list = ', '.join(
+                        [a.first_name + " " + a.last_name +
+                         " (" + a.url + ")" for a in artists])
+                else:
+                    artists_list = ', '.join(
+                        [a.first_name + " " + a.last_name
+                         for a in artists])
+                    return "Includes {0}.".format(artists_list) +\
+                        " More at {0}.".format(artists[0].url)
+            else:
+                return ''
         else:
-            artists_list = ', '.join([a.first_name + " " + a.last_name \
+            artists_list = ', '.join([a.first_name + " " + a.last_name
                                       for a in artists])
+            if (artists[0].url == artists[1].url) &\
+                    (artists[0].url != ''):
+                return 'Includes {0}.'.format(artists_list) +\
+                    ' More at {0}'.format(artists[0].url)
             return 'Includes {0}.'.format(artists_list)
-
 
     def more_on_past(self):
         artists = self.artist.all()
+        if self.event_type == 'Assembled':
+            statement = 'Featuring: {0}.'.format(self.headline)
+            if artists[0].url:
+                statement += ' More at {0}.'.format(artists[0].url)
+            return statement
+
         if len(artists) == 1:
             if artists[0].url:
                 return 'More on {0} at {1}.'.format(artists[0].first_name,
                                                     artists[0].url)
             else:
                 return ''
+        elif len(artists) == 2:
+            if artists[0].url & artists[1].url:
+                if artists[0].url != artists[1].url:
+                    artists_list = ', '.join(
+                        [a.first_name + " " + a.last_name +
+                         " (" + a.url + ")" for a in artists])
+                else:
+                    artists_list = ', '.join(
+                        [a.first_name + " " + a.last_name
+                         for a in artists])
+                    return "Included {0}.".format(artists_list) +\
+                        " More at {0}.".format(artists[0].url)
+            else:
+                return ''
         else:
-            artists_list = ', '.join([a.first_name + " " + a.last_name \
+            artists_list = ', '.join([a.first_name + " " + a.last_name
                                       for a in artists])
+            if artists[0].url == artists[1].url:
+                return 'Included {0}.'.format(artists_list) +\
+                    ' More at {0}'.format(artists[0].url)
             return 'Included {0}.'.format(artists_list)
 
     def __unicode__(self):

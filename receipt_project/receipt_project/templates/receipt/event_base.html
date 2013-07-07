@@ -4,7 +4,7 @@
     <br>Welcome to Locally Made<br>
     <span>----------------------------------</span></h2>
     
-    <p><strong>It is now</strong>: {{ now|date:"fA"|lower }} on {{ now|date:"l, F j Y" }}.</p>
+    <p><strong>It is now</strong>: {{ now|date:"fa" }} on {{ now|date:"l, F j Y" }}.</p>
     <p><strong>You are at</strong>: the Lower Farago entrance of the RISD Museum.</p>
 
     <p><strong>Outside it is</strong>: 65&#176;F and sunny</p>
@@ -75,7 +75,7 @@
     <ul>
         {% for event in past_event %}
         <li>
-            <p><span class="highlight">{{ event.event_type }}</span>: {{ event.title }}. {{event.more_on_past}}</p>
+            <p><span class="highlight">{{ event.event_type }}</span>: {{ event.title }}. {% autoescape off %}{{ event.more_on_past }}{% endautoescape %}</p>
             {% if event.image %}
             <div class="image"><img src="{{ event.processed_image }}"></div>   
             {% endif %}
@@ -95,7 +95,7 @@
         <p>55 recent prints, drawings and sculptures from 36 artists selected from the Museum's permanent collection.</p>
         <p class="divider">* * *</p>
         <h3>Spalter New Media Gallery</h3>
-        <p>11 videos from 7 artists selected from the Museum's permanent collection.</p>
+        <p>3 screens of recent works by 8 Providence-area video artists.</p>
         <p class="divider">* * *</p>
         <h3>Elsewhere in the Museum</h3>
         <p>The anchor symbol next to artworks throughout the Museum denotes pieces created in the Providence area.

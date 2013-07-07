@@ -38,7 +38,7 @@ class EventAdmin(admin.ModelAdmin):
             directory = '/'.join(obj.image.path.split('/')[0:-1])
             extension = obj.image.path.split('.')[-1]
 
-            temp_path = '{0}/temp.{1}'.format(directory, extension)
+            # temp_path = '{0}/temp.{1}'.format(directory, extension)
 
             resized_path = '{0}/resized.{1}'.format(directory, extension)
             halftone_path = '{0}/processed.{1}'.format(directory, extension)
