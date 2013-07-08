@@ -86,7 +86,7 @@ class ReceiptEventView(View):
     def get(self, request, time, *args, **kwargs):
         # set relavent times
         if time:
-          self.now = datetime.strptime(time, '%Y-%m-%dT%H-%M')
+            self.now = datetime.strptime(time, '%Y-%m-%dT%H-%M')
         self.today = datetime.strptime(
             self.now.strftime('%m %d %y'),
             '%m %d %y')
