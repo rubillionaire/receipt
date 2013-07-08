@@ -1,0 +1,5 @@
+- in space
+    - figure out ip of machine
+    - ask to open ports on that ip
+        - 5900 for screen sharing
+        - 8000 for the website
