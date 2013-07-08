@@ -75,7 +75,8 @@ class PrinterMgmt():
         # notifies the correct parties
         sender = 'ruben@thedesignoffice.org'
         recipient = ['ruben@thedesignoffice.org',
-                     '2068530275@txt.att.net']
+                     '2068530275@txt.att.net',
+                     'cmullaly@risd.edu']
 
         msg = MIMEMultipart()
         msg['Subject'] = 'Receipt Printer Alert'

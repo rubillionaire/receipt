@@ -5,11 +5,11 @@
     <br>Welcome to Locally Made<br>
     <span>----------------------------------</span></h2>
     
-    <p><strong>It is now</strong>: {{ now|date:"fa" }} on {{ now|date:"l," }}<br/>{{ now|date:"F j Y" }}.</p>
+    <p><strong>It is now</strong>: {{ now|date:"f a" }} on {{ now|date:"l," }}<br/>{{ now|date:"F j, Y" }}.</p>
     <p><strong>You are at</strong>: the Lower Farago entrance of the RISD Museum.</p>
 
     {% if temp %}
-    <p><strong>Outside it is</strong>: {{ temp.weather|lower }} and {{ temp.temp_f }}&#176;F.</p>
+    <p><strong>Outside it is</strong>: {{ temp.weather|lower }} <br>and {{ temp.temp_f|floatformat:"0" }}&#176;F.</p>
     {% endif %}
 
     <h2><span>----------------------------------</span></h2>
@@ -112,7 +112,7 @@
 {# always show #}
 <footer>
     <h2><span>------------------------------- </span><br>Thank you for coming,<br>please come again<br><span>------------------------------- </span></h2>
-        <p>There are {{ future_events_count }} more events from local artists including {{ random_future_artist_1.first_name }} {% if random_future_artist_1.last_name %}{{random_future_artist_1.last_name }}{% endif%} and {{ random_future_artist_2.first_name }} {% if random_future_artist_2.last_name %}{{ random_future_artist_2.last_name }}{% endif%}. Visit <span class="highlight">risdmuseum.org</span> on your phone or desktop to see photos of today's events and details on future events.</p>
+        <p>There are {{ future_events_count }} more events from local artists including {{ random_future_artist_1.first_name }} {% if random_future_artist_1.last_name %}{{random_future_artist_1.last_name }}{% endif%} and {{ random_future_artist_2.first_name }} {% if random_future_artist_2.last_name %}{{ random_future_artist_2.last_name }}{% endif%}. Visit <span class="highlight">risdmuseum.org</span> on your phone or desktop to upload and browse photos and to learn details of future events.</p>
         <p>This daily guide to the exhibit was created by The Design Office of Providence, R.I. </p>
         <p class="divider">* * *</p>
         <p><img src="/static/img/risd_logo6.png" width="80"><br><span class="highlight">RISD Museum</span>&nbsp;/&nbsp;20 North Main Street<br>Providence, R.I. 02906 /<br>@risdmuseum #oneroommuseum /<br>risdmuseum.org</p>
