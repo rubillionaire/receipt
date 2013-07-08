@@ -85,8 +85,7 @@ class ReceiptEventView(View):
 
     def get(self, request, time, *args, **kwargs):
         # set relavent times
-        if time:
-            self.now = datetime.strptime(time, '%Y-%m-%dT%H-%M')
+        self.now = datetime.strptime(time, '%Y-%m-%dT%H-%M')
         self.today = datetime.strptime(
             self.now.strftime('%m %d %y'),
             '%m %d %y')
@@ -138,6 +137,9 @@ class ReceiptPrintView(ReceiptEventView):
     template_name = 'receipt/daily.html'
 
     def get(self, request, *args, **kwargs):
+        # no time is passed in, use now
+        # to set the template
+        self.now = datetime.now()
 
         return render(request, self.template_name, {'now': self.now})
 
