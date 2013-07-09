@@ -1,23 +1,49 @@
 #!/Users/risdworks/Documents/receipt_env/bin/python
 
-from subprocess import Popen, PIPE
+import sys
+import time
+import socket
+from subprocess import Popen, PIPE, call
 
 # setup django process
 ENV_ROOT = '/Users/risdworks/Documents/receipt_env'
+
+SETUP_FF = '/Users/risdworks/Documents/receipt_env/' +\
+    'repo/receipt/receipt_project/to_start/setup_firefox.app'
 
 activate = "{0}/bin/activate_this.py".format(ENV_ROOT)
 
 execfile(activate, dict(__file__=activate))
 
 
-MANAGE_PATH = '/Users/risdworks/Documents/receipt_env/' +\
-              'repo/receipt/receipt_project/receipt_project/manage.py'
+def check_ip():
+    if socket.gethostbyname(socket.gethostname()) == '10.2.80.98':
+        return launch_server()
+    else:
+        print >>sys.stderr, "Not the corret ip."
+        print >>sys.stderr, "currently: {0}".format(
+            socket.gethostbyname(socket.gethostname()))
+        return delay_check_ip()
 
-command = 'python {0} runserver 10.0.1.26:8000 '.format(MANAGE_PATH) +\
-          '--settings=receipt_project.settings.production'
 
-django = Popen(command,
-               shell=True,
-               stdout=PIPE).stdout
+def delay_check_ip():
+    time.sleep(5)
+    check_ip()
 
-django.read()
+
+def launch_server():
+    call(["open", SETUP_FF])
+    MANAGE_PATH = '/Users/risdworks/Documents/receipt_env/' +\
+                  'repo/receipt/receipt_project/receipt_project/manage.py'
+
+    command = 'python {0} runserver 10.2.80.98:8000 '.format(MANAGE_PATH) +\
+              '--settings=receipt_project.settings.production'
+
+    django = Popen(command,
+                   shell=True,
+                   stdout=PIPE).stdout
+
+    django.read()
+
+
+check_ip()
