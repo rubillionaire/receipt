@@ -74,22 +74,28 @@ class PrinterMgmt():
     def notify(self):
         # notifies the correct parties
         sender = 'ruben@thedesignoffice.org'
-        recipient = ['ruben@thedesignoffice.org',
-                     '2068530275@txt.att.net',
-                     'cmullaly@risd.edu']
+        # if you want BCC, send individual emails
+        to_recipient = ['2068530275@txt.att.net',
+                        'cmullaly@risd.edu',
+                        'hmickey@risd.edu',
+                        'dclemons@risd.edu',
+                        'john@thedesignoffice.org',
+                        'ruben@thedesignoffice.org']
 
         msg = MIMEMultipart()
         msg['Subject'] = 'Receipt Printer Alert'
         msg['From'] = sender
-        msg['To'] = ', '.join(recipient)
-        msg.attach(MIMEText('The receipt printer needs a fresh roll of paper.'))
+        msg['To'] = ', '.join(to_recipient)
+        msg['Cc'] = ''
+        msg.attach(MIMEText('The daily guide printer needs' +
+                            'a fresh roll of paper.'))
 
         s = smtplib.SMTP('smtp.gmail.com', 587)
         s.ehlo()
         s.starttls()
         s.ehlo()
         s.login(sender, os.environ['EMAILPW'])
-        s.sendmail(sender, recipient, msg.as_string())
+        s.sendmail(sender, to_recipient, msg.as_string())
         s.quit()
         pass
 
