@@ -9,7 +9,7 @@
     <p><strong>You are at</strong>: the Lower Farago entrance of the RISD Museum.</p>
 
     {% if temp %}
-    <p><strong>Outside it is</strong>: {{ temp.weather|lower }} <br>and {{ temp.temp_f|floatformat:"0" }}&#176;F.</p>
+    <p><strong>Outside it is</strong>: {{ temp.weather|lower }} and {{ temp.temp_f|floatformat:"0" }}&#176;F.</p>
     {% endif %}
 
     <h2><span>----------------------------------</span></h2>
