@@ -15,17 +15,20 @@ class EventAdmin(admin.ModelAdmin):
     readonly_fields = ('description', )
 
     fields = ('headline', 'description', 'image', 'notes',
-              'title', 'event_type','location', 'featured',
+              'title', 'event_type','location',
               'artist', 'start', 'end')
 
     def description(self, obj):
         four_hours = timedelta(hours=4)
         adjusted_end = obj.end - four_hours
-        return '{0}: {1} in the {2} until about {3}.'.format(obj.event_type,
-                                                             obj.title,
-                                                             obj.location,
-                                                             adjusted_end.strftime('%I%p')
-                                                                .lstrip('0'))
+        return '{0}: {1} in the {2}'.format(obj.event_type,
+                                            obj.title,
+                                            obj.location,) +\
+            ' until about {0}.'.format(adjusted_end.strftime('%I%p')
+                                       .lstrip('0')) +\
+            ' {0}'.format(obj.more_on()) +\
+            ' {0}'.format(obj.notes)
+
     description.short_description = 'Description'
 
     def save_model(self, request, obj, form, change):
@@ -84,5 +87,7 @@ admin.site.register(Show, ShowAdmin)
 
 class ArtistAdmin(admin.ModelAdmin):
     ordering = ('first_name', )
+
+    fields = ('first_name', 'last_name', 'url')
 
 admin.site.register(Artist, ArtistAdmin)

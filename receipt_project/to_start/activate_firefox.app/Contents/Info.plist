@@ -10,10 +10,12 @@
 	<string>applet</string>
 	<key>CFBundleIconFile</key>
 	<string>applet</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.apple.ScriptEditor.id.activate-firefox</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>FullScreenFF</string>
+	<string>activate_firefox</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleSignature</key>
@@ -36,9 +38,9 @@
 		<key>positionOfDivider</key>
 		<real>333</real>
 		<key>savedFrame</key>
-		<string>38 56 602 522 0 0 800 578 </string>
+		<string>785 225 602 597 0 0 1920 1178 </string>
 		<key>selectedTabView</key>
-		<string>event log</string>
+		<string>result</string>
 	</dict>
 </dict>
 </plist>

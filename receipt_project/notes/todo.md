@@ -1,5 +1,6 @@
 - in space
-    - figure out ip of machine
+    - 10.2.80.98
     - ask to open ports on that ip
         - 5900 for screen sharing
         - 8000 for the website
+- can we rely on this IP? should we static IP it?
