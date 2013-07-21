@@ -11,7 +11,7 @@
 	<key>RunAtLoad</key>
 	<true/>
 	<key>StartInterval</key>
-	<integer>3600</integer>
+	<integer>600</integer>
 	<key>StandardErrorPath</key>
 	<string>/Users/risdworks/Documents/receipt_env/logs/weather_stderr.log</string>
 	<key>StandardOutPath</key>

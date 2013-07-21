@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Label</key>
-	<string>com.dailyguide.weather</string>
+	<string>com.dailyguide.firefox</string>
 	<key>ProgramArguments</key>
 	<array>
 		<string>open</string>
