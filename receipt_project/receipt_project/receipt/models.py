@@ -173,6 +173,8 @@ class Event(TimeFramedModel):
         #     if artists[0].url:
         #         statement += ' More at {0}.'.format(artists[0].url)
         #     return statement
+        if len(artists) == 0:
+            return ''
         if len(artists) == 1:
             if artists[0].url:
                 return 'More on {0} at {1}.'.format(artists[0].first_name,
@@ -209,6 +211,9 @@ class Event(TimeFramedModel):
             if artists[0].url:
                 statement += ' More at {0}.'.format(artists[0].url)
             return statement
+
+        if len(artists) == 0:
+            return ''
 
         if len(artists) == 1:
             if artists[0].url:

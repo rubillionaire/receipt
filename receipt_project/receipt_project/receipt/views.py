@@ -49,16 +49,25 @@ class ReceiptEventView(View):
         # random future artists for footer
         random_future_events = Event.objects.filter(
             start__gt=self.end_of_today)\
-            .order_by('start')[:2]
+            .order_by('start')[:10]
 
-        random_future_artist_1 = random_future_events[0]\
-            .artist.all()[0]
-        random_future_artist_2 = random_future_events[1]\
-            .artist.all()[0]
-        # end random future artists for footer
+        artists = []
 
-        return random_future_artist_1,\
-            random_future_artist_2
+        for random in random_future_events:
+            if len(random.artist.all()) == 0:
+                # no artists to add to the guide
+                continue
+            else:
+                # add the first artist
+                artists.append(random.artist.all()[0])
+
+            if len(artists) == 2:
+                # only need two artists
+                break
+
+        print artists
+
+        return artists[0], artists[1]
 
     def future_count(self):
         future_events_count = Event.objects.filter(start__gt=self.now)\
