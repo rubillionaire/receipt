@@ -11,9 +11,6 @@
 # Sphinx docs:
 build
 
-# SQLite3 database files:
-*.db
-
 # Logs:
 *.log
 
@@ -21,3 +18,5 @@ images_to_import/*.jpg
 images_to_import/*.JPG
 
 receipt/management/commands/images_to_import/
+
+.DS_Store
