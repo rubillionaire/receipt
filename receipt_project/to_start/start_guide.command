@@ -17,8 +17,10 @@ execfile(activate, dict(__file__=activate))
 
 
 def check_ip():
-    if socket.gethostbyname(socket.gethostname()) == '10.2.80.98':
-        return launch_server()
+    # if socket.gethostbyname(socket.gethostname()) == '10.2.80.98':
+    address = socket.gethostbyname(socket.gethostname())
+    if address.startswith('10.2'):
+        return launch_server(address)
     else:
         print >>sys.stderr, "Not the corret ip."
         print >>sys.stderr, "currently: {0}".format(
@@ -31,12 +33,13 @@ def delay_check_ip():
     check_ip()
 
 
-def launch_server():
+def launch_server(address):
     call(["open", SETUP_FF])
     MANAGE_PATH = '/Users/risdworks/Documents/receipt_env/' +\
                   'repo/receipt/receipt_project/receipt_project/manage.py'
 
-    command = 'python {0} runserver 10.2.80.98:8000 '.format(MANAGE_PATH) +\
+    command = 'python {0} runserver '.format(MANAGE_PATH) +\
+              '{0}:8000 '.format(address) +\
               '--settings=receipt_project.settings.production'
 
     django = Popen(command,
