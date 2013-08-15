@@ -134,7 +134,7 @@ class Event(TimeFramedModel):
         hl = self.headline.strip()
 
         # check for shorties.
-        if len(hl) <= 10:
+        if len(hl) <= 9:
             # check for image
             if self.image:
                 return hl
@@ -156,7 +156,7 @@ class Event(TimeFramedModel):
         # check for long parts
         make_smaller = False
         for piece in hl_split:
-            if len(piece) > 10:
+            if len(piece) >= 10:
                 make_smaller = True
 
         if make_smaller:
