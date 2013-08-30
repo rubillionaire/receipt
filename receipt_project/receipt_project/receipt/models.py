@@ -137,32 +137,50 @@ class Event(TimeFramedModel):
         if len(hl) <= 9:
             # check for image
             if self.image:
-                return hl
+                return "<h4>{0}</h4>".format(hl)
             else:
                 # if no image, make one line
-                return hl.replace(' ', '&nbsp;')
+                return "<h4>{0}</h4>".format(hl.replace(' ', '&nbsp;'))
+
+        make_smaller = False
 
         # check for short parts that can be on
         # the same line as their preceding line
         hl_split = hl.split(" ")
         if len(hl_split) >= 3:
-            first_two = len(hl_split[0]) + len(hl_split[1])
-            if first_two <= 9:
+            len_first_two = len(hl_split[0]) + len(hl_split[1])
+            if len_first_two <= 10:
                 first_two = '{0}&nbsp;{1}'.format(hl_split[0],
                                                   hl_split[1])
+                if (len("".join(hl_split)) >= 20):
+                    make_smaller = True
+
+                    if len(hl_split) == 4:
+                        return '<h4 class="smaller">' +\
+                               '{0} '.format(first_two) +\
+                               '{0}&nbsp;'.format(hl_split[2]), +\
+                               '{0}'.format(hl_split[3]) +\
+                               '</h4>'
+
+                    return '<h4 class="smaller">' +\
+                            '{0} {1}'.format(first_two,
+                                             ' '.join(hl_split[2:])) +\
+                            '</h4>'
+
                 return '{0} {1}'.format(first_two,
                                         ' '.join(hl_split[2:]))
+            if (len("".join(hl_split)) > 20):
+                make_smaller = True
 
         # check for long parts
-        make_smaller = False
         for piece in hl_split:
             if len(piece) >= 10:
                 make_smaller = True
 
         if make_smaller:
-            return '<span class="smaller">{0}</span>'.format(hl)
+            return '<h4 class="smaller">{0}</h4>'.format(hl)
 
-        return hl
+        return "<h4>{0}</h4>".format(hl)
 
     # used for the last sentence
     # in the description

@@ -118,8 +118,9 @@ div.person .name h4 {
     margin: 0 auto;
     width: 16.2pc;
 }
-div.person .name h4 span.smaller {
+div.person .name h4.smaller {
     font-size: 58pt;
+    line-height: 80%;
 }
 
 .permanent h3 { 

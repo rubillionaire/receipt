@@ -36,7 +36,7 @@
             <p><span class="highlight">{{ event.event_type }}</span>: {{ event.title }} in the {{ event.location }} until about {{ event.end|date:"f" }}&nbsp;{{ event.end|date:"a" }} {{event.notes}} {{ event.more_on }}</p>
 
             <div class="person">
-                <div class="name"><h4>{% autoescape off %}{{ event.template_headline }}{% endautoescape %}</h4></div>
+                <div class="name">{% autoescape off %}{{ event.template_headline }}{% endautoescape %}</div>
                 {% if event.image %}
                 <div class="image"><div><img src="{{ event.processed_image }}"></div></div>   
                 {% endif %}
